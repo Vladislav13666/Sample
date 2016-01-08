@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="PhotoGalleryWcfService.PhotoGalleryService, PhotoGalleryWcfService" CodeBehind="PhotoGalleryService.svc.cs" Factory="Autofac.Integration.Wcf.AutofacServiceHostFactory, Autofac.Integration.Wcf"%>

@@ -1,0 +1,37 @@
+﻿@model PhotoGallery.Client.WebApp.Models.UserViewModel.EditUserEmail
+
+@using (Html.BeginForm("ChangeUserEmail", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-horizontal">
+        <h4 class="col-md-offset-1">ChangeEmail</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Login)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentEmail, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CurrentEmail)
+                @Html.ValidationMessageFor(model => model.CurrentEmail)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewEmail, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NewEmail)
+                @Html.ValidationMessageFor(model => model.NewEmail)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+

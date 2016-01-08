@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PhotoGalleryService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:2444/PhotoGalleryService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:2444/PhotoGalleryService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" />
+      <xsd:import schemaLocation="http://localhost:2444/PhotoGalleryService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:2444/PhotoGalleryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPhotoGalleryService_CreateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUser" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_CreateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_CreateUser_ServiceValidationErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q1:ServiceValidationError" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_AuthenticateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateUser" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_AuthenticateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_AuthenticateUser_ServiceDataErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q2:ServiceDataError" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_AuthenticateUser_ServiceValidationErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q3:ServiceValidationError" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_FindUserByUserLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindUserByUserLogin" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_FindUserByUserLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindUserByUserLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_FindUserByUserLogin_ServiceDataErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q4:ServiceDataError" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_UpdateUserEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserEmail" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_UpdateUserEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_UpdateUserPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserPassword" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_UpdateUserPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_UpdateUserInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_UpdateUserInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_AddPhoto_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPhoto" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_AddPhoto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPhotoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetPhotosByUserId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotosByUserId" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetPhotosByUserId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotosByUserIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetPhotos_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotos" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetPhotos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetPhotoInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotoInfo" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetPhotoInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotoInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_UpdatePhotoInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePhotoInfo" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_UpdatePhotoInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePhotoInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_DeletePhoto_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePhoto" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_DeletePhoto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePhotoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetPhotoCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotoCount" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetPhotoCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotoCountResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IPhotoGalleryService">
+    <wsdl:operation name="CreateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/CreateUser" message="tns:IPhotoGalleryService_CreateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/CreateUserResponse" message="tns:IPhotoGalleryService_CreateUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPhotoGalleryService/CreateUserServiceValidationErrorFault" name="ServiceValidationErrorFault" message="tns:IPhotoGalleryService_CreateUser_ServiceValidationErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/AuthenticateUser" message="tns:IPhotoGalleryService_AuthenticateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/AuthenticateUserResponse" message="tns:IPhotoGalleryService_AuthenticateUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPhotoGalleryService/AuthenticateUserServiceDataErrorFault" name="ServiceDataErrorFault" message="tns:IPhotoGalleryService_AuthenticateUser_ServiceDataErrorFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPhotoGalleryService/AuthenticateUserServiceValidationErrorFault" name="ServiceValidationErrorFault" message="tns:IPhotoGalleryService_AuthenticateUser_ServiceValidationErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindUserByUserLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/FindUserByUserLogin" message="tns:IPhotoGalleryService_FindUserByUserLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/FindUserByUserLoginResponse" message="tns:IPhotoGalleryService_FindUserByUserLogin_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPhotoGalleryService/FindUserByUserLoginServiceDataErrorFault" name="ServiceDataErrorFault" message="tns:IPhotoGalleryService_FindUserByUserLogin_ServiceDataErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/UpdateUserEmail" message="tns:IPhotoGalleryService_UpdateUserEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/UpdateUserEmailResponse" message="tns:IPhotoGalleryService_UpdateUserEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/UpdateUserPassword" message="tns:IPhotoGalleryService_UpdateUserPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/UpdateUserPasswordResponse" message="tns:IPhotoGalleryService_UpdateUserPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/UpdateUserInfo" message="tns:IPhotoGalleryService_UpdateUserInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/UpdateUserInfoResponse" message="tns:IPhotoGalleryService_UpdateUserInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPhoto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/AddPhoto" message="tns:IPhotoGalleryService_AddPhoto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/AddPhotoResponse" message="tns:IPhotoGalleryService_AddPhoto_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotosByUserId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserId" message="tns:IPhotoGalleryService_GetPhotosByUserId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserIdResponse" message="tns:IPhotoGalleryService_GetPhotosByUserId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotos" message="tns:IPhotoGalleryService_GetPhotos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotosResponse" message="tns:IPhotoGalleryService_GetPhotos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotoInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotoInfo" message="tns:IPhotoGalleryService_GetPhotoInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotoInfoResponse" message="tns:IPhotoGalleryService_GetPhotoInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePhotoInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/UpdatePhotoInfo" message="tns:IPhotoGalleryService_UpdatePhotoInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/UpdatePhotoInfoResponse" message="tns:IPhotoGalleryService_UpdatePhotoInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePhoto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/DeletePhoto" message="tns:IPhotoGalleryService_DeletePhoto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/DeletePhotoResponse" message="tns:IPhotoGalleryService_DeletePhoto_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotoCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotoCount" message="tns:IPhotoGalleryService_GetPhotoCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotoCountResponse" message="tns:IPhotoGalleryService_GetPhotoCount_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IPhotoGalleryService_IPhotoGalleryService" type="tns:IPhotoGalleryService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateUser">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/CreateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceValidationErrorFault">
+        <soap:fault use="literal" name="ServiceValidationErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateUser">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/AuthenticateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceDataErrorFault">
+        <soap:fault use="literal" name="ServiceDataErrorFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ServiceValidationErrorFault">
+        <soap:fault use="literal" name="ServiceValidationErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FindUserByUserLogin">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/FindUserByUserLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceDataErrorFault">
+        <soap:fault use="literal" name="ServiceDataErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserEmail">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/UpdateUserEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserPassword">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/UpdateUserPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserInfo">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/UpdateUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddPhoto">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/AddPhoto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotosByUserId">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotos">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/GetPhotos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotoInfo">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/GetPhotoInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePhotoInfo">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/UpdatePhotoInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePhoto">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/DeletePhoto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotoCount">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/GetPhotoCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PhotoGalleryService">
+    <wsdl:port name="BasicHttpBinding_IPhotoGalleryService_IPhotoGalleryService" binding="tns:BasicHttpBinding_IPhotoGalleryService_IPhotoGalleryService">
+      <soap:address location="http://localhost:2444/PhotoGalleryService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

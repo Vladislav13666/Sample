@@ -1,0 +1,24 @@
+﻿@model PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel
+
+<div class="container-element col-md-offset-1" name="@Model.PhotoId">
+    <div class="image-container">
+        <img class="img-thumbnail" src="@Model.ImagePath" />
+    </div>
+    <div class="photo-info">
+        <div>
+            <h2 class="image-title">@Model.Title</h2>
+            <button type="button" class="viewDialog" onclick="photoEdit(@Model.PhotoId)">
+                <span class="glyphicon glyphicon-edit"></span>EditPhoto
+            </button>
+            <button type="button" class="viewDialog" onclick="photoDelete(@Model.PhotoId)">
+                <span class="glyphicon glyphicon-remove"></span>DeletePhoto
+            </button>
+        </div>
+        <div class="author-info">
+            <br />
+            Added @Html.DisplayFor(e => e.CreateTime)
+        </div>
+        <br />
+     </div>
+</div>
+

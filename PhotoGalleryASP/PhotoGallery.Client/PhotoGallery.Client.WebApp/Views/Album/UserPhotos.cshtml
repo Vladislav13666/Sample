@@ -1,0 +1,22 @@
+﻿@using PhotoGallery.Client.WebApp.Helper
+@model PageableData<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>
+
+<div class="pagination col-md-offset-1">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action("UserPhotos", new { page = x, userId=Model.UserId }))
+</div>
+
+
+<div id="contentPlace">
+    @Html.Partial("PhotoCollection", Model.List)
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: false });
+
+        });
+    </script>
+}
+

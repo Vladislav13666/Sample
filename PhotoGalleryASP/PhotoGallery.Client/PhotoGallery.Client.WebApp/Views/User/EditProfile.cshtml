@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ProfileSettings</title>
+</head>
+<body>
+    <div class="container-element-fluid">
+        <div id="resultDivInfo">@Html.Partial("ChangeUserInfo", @ViewData["Info"])</div>
+         <p></p>
+        <div id="resultDivPassword">@Html.Partial("ChangeUserPassword", @ViewData["Password"])</div>
+        <p></p>
+    <div id="resultDivEmail">@Html.Partial("ChangeUserEmail", @ViewData["Email"])</div>
+        </div>
+  
+</body>
+</html>
+

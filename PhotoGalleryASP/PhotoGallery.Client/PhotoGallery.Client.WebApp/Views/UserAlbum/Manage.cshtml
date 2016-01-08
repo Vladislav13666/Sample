@@ -1,0 +1,103 @@
+﻿@using PhotoGallery.Client.WebApp.Helper;
+@model PageableData<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>
+
+
+<html>
+<head>
+       
+</head>
+<body>
+    <div class="rows">
+          
+        <button type="button" class="viewDialog col-md-offset-1" onclick="photoCreate()">
+            <span class="glyphicon glyphicon-save"></span>Upload Photo
+        </button>
+    
+
+        <div class="pagination col-md-offset-1">
+            @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action("Manage", new { page = x }))
+        </div>
+
+    </div>    
+
+
+        <div id="contentPlace">
+           @Html.Partial("PhotoCollection", Model.List);           
+        </div>
+
+        @section scripts {
+    <script type="text/javascript">
+
+    
+        function photoCreate() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Create")',
+                data: {},
+                success: function (result) {
+                    $("#dialogContent").html(result);
+                }
+            });
+        }
+
+        function photoEdit(photoId) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("EditPhoto")',
+                data: { photoId: photoId },
+                success: function (result) {
+                   $("#dialogContent").html(result);
+                }
+            });
+        }
+
+        function photoDelete(photoId) {
+             $.ajax({
+                type: 'GET',
+                url: '@Url.Action("DeletePhoto")',
+                data: { photoId: photoId },
+                success: function (result) {
+                  $("#dialogContent").html(result);
+                }
+             });
+        }
+
+
+        $(document).ready(function () {
+
+            $.ajaxSetup({ cache: false });
+                     
+
+        $(".viewDialog").on("click", function (e) {
+            e.preventDefault();
+
+            $("<div id='dialogContent'></div>")
+                .addClass("dialog")
+                .appendTo("body")
+                .load(this.href)
+                .dialog({
+                    title: $(this).attr("data-dialog-title"),
+                    close: function () { $(this).remove() },
+                    modal: true,
+                    buttons: {
+                        "Save": function () {
+                            var form = $('form');
+                            form.submit();
+                        }
+                    }
+                });
+        });
+        $(".close").on("click", function (e) {
+            e.preventDefault();
+            $(this).closest(".dialog").dialog("close");
+        });
+
+    });
+    </script>
+
+        }
+</body>
+</html>
+
+
+  

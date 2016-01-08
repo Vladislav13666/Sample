@@ -1,0 +1,37 @@
+﻿@model PhotoGallery.Client.WebApp.Models.UserViewModel.LoginUserModel
+
+<h4>LogIn</h4>
+@using (Html.BeginForm("LogIn", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Login, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Login)
+                @Html.ValidationMessageFor(model => model.Login,"", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password,"", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="LogIn" class="btn btn-success col-md-3" style="margin-right: 2%" />
+                <a href="@Url.Action("Register")" class="btn btn-info col-md-3">Register</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+

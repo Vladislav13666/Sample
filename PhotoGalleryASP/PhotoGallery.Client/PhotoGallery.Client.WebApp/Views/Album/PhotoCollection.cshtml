@@ -1,0 +1,8 @@
+﻿@model IEnumerable<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>
+
+
+@foreach (var photo in Model)
+{
+    @Html.Partial("Photo", photo)
+}
+

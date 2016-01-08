@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="25dd16b6-2344-4661-947b-a92e3326c908" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:2444/PhotoGalleryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PhotoGalleryService.disco" MetadataType="Disco" ID="c1dd2de5-5c0b-47fd-b8c6-66433fe01fb6" SourceId="1" SourceUrl="http://localhost:2444/PhotoGalleryService.svc?disco" />
+    <MetadataFile FileName="PhotoGalleryService2.xsd" MetadataType="Schema" ID="46ee81a9-2c05-4fb3-8d13-732845b61f28" SourceId="1" SourceUrl="http://localhost:2444/PhotoGalleryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PhotoGalleryService1.xsd" MetadataType="Schema" ID="349f63f6-7f79-4428-bf3b-7e8ee92d216f" SourceId="1" SourceUrl="http://localhost:2444/PhotoGalleryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PhotoGalleryService3.xsd" MetadataType="Schema" ID="04de8bbd-8e1a-42c0-b2b3-682a9b45fea3" SourceId="1" SourceUrl="http://localhost:2444/PhotoGalleryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PhotoGalleryService.xsd" MetadataType="Schema" ID="b64c613d-74f3-4de3-b765-1f88c98f7561" SourceId="1" SourceUrl="http://localhost:2444/PhotoGalleryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PhotoGalleryService.wsdl" MetadataType="Wsdl" ID="68a218aa-d783-4b48-bd2d-2c91d5669a7a" SourceId="1" SourceUrl="http://localhost:2444/PhotoGalleryService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
