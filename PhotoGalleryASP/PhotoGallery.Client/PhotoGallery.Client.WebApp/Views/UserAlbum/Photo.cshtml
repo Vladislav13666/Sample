@@ -19,6 +19,21 @@
             Added @Html.DisplayFor(e => e.CreateTime)
         </div>
         <br />
+<label>
+    Average Rating
+</label>
+
+@for (int k = 0; k < 5; k++)
+{
+    if (k < Model.AverageRating)
+    {
+            <span class="glyphicon glyphicon-star" style="color: gold"></span>
+    }
+    else
+    {
+            <span class="glyphicon glyphicon-star" style="color: black"></span>
+    }
+}
      </div>
 </div>
 

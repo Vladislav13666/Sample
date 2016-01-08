@@ -85,14 +85,20 @@ namespace PhotoGalleryWcfService
             photoGallerySrv.AddPhoto(photoDto);
         }
 
-        public PhotoDto[] GetPhotosByUserId(int userId, int page, int pageSize)
+        public PhotoDto[] GetPhotosByUserId(int userId, int userObserverId, int page, int pageSize)
         {
-           return photoGallerySrv.GetPhotosByUserId(userId, page, pageSize);
+           return photoGallerySrv.GetPhotosByUserId(userId, userObserverId, page, pageSize);
         }
 
-        public PhotoDto[] GetPhotos(int page, int pageSize)
+        public PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize)
         {
-            return photoGallerySrv.GetPhotos(page, pageSize);
+            return photoGallerySrv.GetPhotos(userObserverId, page, pageSize);
+        }
+
+
+        public PhotoDto[] GetUserAlbum(int userId, int page, int pageSize)
+        {
+            return photoGallerySrv.GetUserAlbum(userId,page, pageSize);
         }
 
         public PhotoInfoDto GetPhotoInfo(int photoId)
@@ -114,6 +120,10 @@ namespace PhotoGalleryWcfService
         {
             return photoGallerySrv.GetPhotoCount(userId);
         }
-       
+        public void SetPhotoRating(int photoId, int userId, int rating)
+        {
+            photoGallerySrv.SetPhotoRating(photoId, userId,rating);
+        }
+
     }
 }

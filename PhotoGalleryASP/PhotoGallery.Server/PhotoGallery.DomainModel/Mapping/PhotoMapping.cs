@@ -13,7 +13,7 @@ namespace PhotoGallery.DomainModel.Mapping
     {
         public static void RegisterMappings()
         {
-            Mapper.CreateMap<Photo, PhotoDto>();
+            Mapper.CreateMap<Photo, PhotoDto>().ForMember("AverageRating",p=>p.MapFrom(c =>c.AllVotes!=0?c.AllRating/c.AllVotes:0));
             Mapper.CreateMap<PhotoDto, Photo>();
             Mapper.CreateMap<Photo, PhotoInfoDto>();
         }

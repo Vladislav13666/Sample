@@ -24,7 +24,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
         public ActionResult AllPhotos(int page = 1)
         {
             int pageSize = 1;
-            var photos = _service.GetPhotos(page, pageSize).
+            var photos = _service.GetPhotos((User as PhotoGalleryPrincipal).Id,page, pageSize).
                 Select(Mapper.Map<PhotoDto, PhotoModel>);
             var count=_service.GetPhotoCount(null);
             var data = new PageableData<PhotoModel>(photos, page, count, pageSize);
@@ -36,10 +36,18 @@ namespace PhotoGallery.Client.WebApp.Controllers
         public ActionResult UserPhotos(int userId,int page=1)
         {
             int pageSize = 1;
-            var photos=_service.GetPhotosByUserId(userId,page,pageSize).Select(Mapper.Map<PhotoDto, PhotoModel>);
+            var photos=_service.GetPhotosByUserId(userId, (User as PhotoGalleryPrincipal).Id,page, pageSize).Select(Mapper.Map<PhotoDto, PhotoModel>);
             var count = _service.GetPhotoCount(userId);
             var data = new PageableData<PhotoModel>(photos, page, count, pageSize,userId);
             return View(data);
+        }
+        
+        [Authorize]
+        [HttpGet]
+        public ActionResult SetPhotoRating(int photoId,int rating)
+        {         
+            _service.SetPhotoRating(photoId, (User as PhotoGalleryPrincipal).Id,rating);
+            return RedirectToAction("AllPhotos");
         }
 
         

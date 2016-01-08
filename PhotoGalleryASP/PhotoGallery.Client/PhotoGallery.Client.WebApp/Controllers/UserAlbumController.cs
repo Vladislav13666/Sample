@@ -27,8 +27,8 @@ namespace PhotoGallery.Client.WebApp.Controllers
        [HttpGet]  
         public ActionResult Manage(int page=1)
         {
-            int pageSize = 1;
-            var photos = _service.GetPhotosByUserId((User as PhotoGalleryPrincipal).Id, page, pageSize).
+            int pageSize = 1;           
+            var photos = _service.GetUserAlbum((User as PhotoGalleryPrincipal).Id, page, pageSize).
                 Select(Mapper.Map<PhotoDto, PhotoModel>);
             var count = _service.GetPhotoCount((User as PhotoGalleryPrincipal).Id);
             var data = new PageableData<PhotoModel>(photos, page, count, pageSize);

@@ -101,6 +101,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="userObserverId" type="xs:int" />
         <xs:element minOccurs="0" name="page" type="xs:int" />
         <xs:element minOccurs="0" name="pageSize" type="xs:int" />
       </xs:sequence>
@@ -116,6 +117,7 @@
   <xs:element name="GetPhotos">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="userObserverId" type="xs:int" />
         <xs:element minOccurs="0" name="page" type="xs:int" />
         <xs:element minOccurs="0" name="pageSize" type="xs:int" />
       </xs:sequence>
@@ -125,6 +127,22 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetPhotosResult" nillable="true" type="q7:ArrayOfPhotoDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserAlbum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="page" type="xs:int" />
+        <xs:element minOccurs="0" name="pageSize" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserAlbumResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetUserAlbumResult" nillable="true" type="q8:ArrayOfPhotoDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -138,7 +156,7 @@
   <xs:element name="GetPhotoInfoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetPhotoInfoResult" nillable="true" type="q8:PhotoInfoDto" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetPhotoInfoResult" nillable="true" type="q9:PhotoInfoDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -179,6 +197,20 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="GetPhotoCountResult" type="xs:int" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetPhotoRating">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="photoId" type="xs:int" />
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="rating" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetPhotoRatingResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
 </xs:schema>

@@ -16,61 +16,42 @@
         <br />
         <div>
             <label class="col-md-offset-0">
-                Rating <label data-type="rating-block"></label>
+               Average Rating
             </label>
+@for (int k = 0; k < 5; k++)
+{
+    if (k < Model.AverageRating)
+    {
+        <span class="glyphicon glyphicon-star" style="color: gold"></span>
+    }
+    else
+    {
+        <span class="glyphicon glyphicon-star" style="color: black"></span>
+    }
+}         
             <label class="col-md-offset-1">
-                YourRating <label data-type="user-vote"></label>
+                Your Rating 
             </label>
+         
+
+       @for (int k = 0; k < 5; k++)
+       {
+           if (k < Model.CurrentUserRating)
+           {
+                @*<a href="@Url.Action("SetPhotoRating", new { photoId = Model.PhotoId, rating = k + 1 })">*@
+                    <span class="glyphicon glyphicon-star" style="color: gold" onclick="setRating(@k+1,@Model.PhotoId)"></span>
+              
+           }
+           else
+           {
+            @*<a href="@Url.Action("SetPhotoRating", new { photoId = Model.PhotoId, rating = k + 1 })">*@
+                <span class="glyphicon glyphicon-star" style="color: black" onclick="setRating(@k+1,@Model.PhotoId)"></span>
+              
+           }
+       }
 
         </div>
     </div>
 </div>
 
 
-@*<script type="text/javascript">
-    $(document).ajaxComplete(function() {
-        function ratyReadOnlyParams(score) {
-            return { readOnly: true, path: $.common.contentPath, score: score, number: 5 };
-        }
-
-        $('[name=' + @Model.ImageId + ']  [data-type=rating-block]').raty(
-            ratyReadOnlyParams(@Math.Round(Model.AverageScore)));
-        var userVote = $('[name=' + @Model.ImageId + '] [data-type=user-vote]');
-        var cookie = $.cookie('@Model.ImageId');
-        userVote.raty({
-            readOnly: function() {
-                return cookie != null;
-            },
-            path: $.common.contentPath,
-            score: function() {
-                return cookie == null ? 0 : Math.round(parseFloat(cookie));
-            },
-            number: 5,
-            click: function(score) {
-                if (cookie != null) return false;
-
-                function errorNotify() {
-                    $.common.notifyOptions.type = 'danger';
-                    $.notyfy({
-                        message: '@Messages.ServiceError'
-                    }, $.common.notifyOptions);
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("SetScoreToPhoto")',
-                    data: { photoId: @Model.ImageId, score: Math.round(score) },
-                    error: errorNotify,
-                    complete: function(res) {
-                        cookie = $.cookie('@Model.ImageId');
-                        var result = JSON.parse(res);
-                        if (result !== true) {
-                            errorNotify();
-                        }
-                    }
-                });
-                return true;
-            }
-        });
-    });
-</script>*@

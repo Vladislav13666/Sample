@@ -74,6 +74,12 @@
   <wsdl:message name="IPhotoGalleryService_GetPhotos_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPhotosResponse" />
   </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetUserAlbum_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserAlbum" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetUserAlbum_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserAlbumResponse" />
+  </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_GetPhotoInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPhotoInfo" />
   </wsdl:message>
@@ -97,6 +103,12 @@
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_GetPhotoCount_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPhotoCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_SetPhotoRating_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetPhotoRating" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_SetPhotoRating_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetPhotoRatingResponse" />
   </wsdl:message>
   <wsdl:portType name="IPhotoGalleryService">
     <wsdl:operation name="CreateUser">
@@ -139,6 +151,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotos" message="tns:IPhotoGalleryService_GetPhotos_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotosResponse" message="tns:IPhotoGalleryService_GetPhotos_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetUserAlbum">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetUserAlbum" message="tns:IPhotoGalleryService_GetUserAlbum_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetUserAlbumResponse" message="tns:IPhotoGalleryService_GetUserAlbum_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetPhotoInfo">
       <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotoInfo" message="tns:IPhotoGalleryService_GetPhotoInfo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotoInfoResponse" message="tns:IPhotoGalleryService_GetPhotoInfo_OutputMessage" />
@@ -154,6 +170,10 @@
     <wsdl:operation name="GetPhotoCount">
       <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotoCount" message="tns:IPhotoGalleryService_GetPhotoCount_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotoCountResponse" message="tns:IPhotoGalleryService_GetPhotoCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPhotoRating">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/SetPhotoRating" message="tns:IPhotoGalleryService_SetPhotoRating_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/SetPhotoRatingResponse" message="tns:IPhotoGalleryService_SetPhotoRating_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPhotoGalleryService_IPhotoGalleryService" type="tns:IPhotoGalleryService">
@@ -251,6 +271,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetUserAlbum">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/GetUserAlbum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetPhotoInfo">
       <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/GetPhotoInfo" style="document" />
       <wsdl:input>
@@ -280,6 +309,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetPhotoCount">
       <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/GetPhotoCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPhotoRating">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/SetPhotoRating" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

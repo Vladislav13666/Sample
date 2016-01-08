@@ -39,10 +39,13 @@ namespace PhotoGalleryWcfService.ServiceContracts
         void AddPhoto(PhotoDto photoDto);
 
         [OperationContract]
-        PhotoDto[] GetPhotosByUserId(int userId, int page, int pageSize);
+        PhotoDto[] GetPhotosByUserId(int userId, int userObserverId, int page, int pageSize);
 
         [OperationContract]
-        PhotoDto[] GetPhotos(int page, int pageSize);
+        PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize);
+
+        [OperationContract]
+        PhotoDto[] GetUserAlbum(int userId, int page, int pageSize);
 
 
         [OperationContract]
@@ -57,30 +60,8 @@ namespace PhotoGalleryWcfService.ServiceContracts
         [OperationContract]
         int GetPhotoCount(int? userId);
 
-        /*
+        [OperationContract]
+        void SetPhotoRating(int photoId, int userId, int rating);
 
-            [OperationContract]
-            List<PhotoDto> FindUserPhotosByLogin(string login, int page, int pageSize);
-
-            [OperationContract]
-            void AddPhotoByUserLogin(string login, PhotoDto photoDto);
-
-            [OperationContract]
-            PhotoDto FindPhotobyId(int? id);
-
-            [OperationContract]
-            void DeletePhoto(int? id);
-
-            [OperationContract]
-            List<PhotoDto> GetAllPhotos(string login, string sortOrder, string userOwner, int page, int pageSize);
-
-            [OperationContract]
-            void SetPhotoRating(int photoId, int currentUserRating, string loginUser);
-
-            [OperationContract]
-            void EditPhoto(PhotoDto photoDto);
-
-            [OperationContract]
-            int GetAllPhotosCount(string login);*/
-    }
+         }
 }

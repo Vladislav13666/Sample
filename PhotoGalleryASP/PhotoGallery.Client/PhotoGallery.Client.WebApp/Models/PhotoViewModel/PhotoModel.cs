@@ -12,6 +12,8 @@ namespace PhotoGallery.Client.WebApp.Models.PhotoViewModel
         public string PhotoOwner { get; set; }
         public string Title { get; set; }
         public string ImagePath { get; set; }
+        public int AverageRating { get; set; }
+        public int CurrentUserRating { get; set; }
         public DateTime CreateTime { get; set; }
         
     }

@@ -19,9 +19,11 @@ namespace PhotoGallery.DomainModel
 
         void AddPhoto(PhotoDto photoDto);
 
-        PhotoDto[] GetPhotosByUserId(int userId, int page, int pageSize);
+        PhotoDto[] GetPhotosByUserId(int userId, int userObserverId, int page, int pageSize);
 
-        PhotoDto[] GetPhotos(int page, int pageSize);
+        PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize);
+
+        PhotoDto[] GetUserAlbum(int userId, int page, int pageSize);
 
         PhotoInfoDto GetPhotoInfo(int photoId);
 
@@ -30,14 +32,8 @@ namespace PhotoGallery.DomainModel
         void DeletePhoto(int photoId);
 
         int GetPhotoCount(int? userId);
-        /* void AddPhotoByUserLogin(string login, PhotoDto photoDto);
-        List<PhotoDto> FindUserPhotosByLogin(string login, int page, int pageSize);
-        PhotoDto FindPhotobyId(int? id);
-        void DeletePhoto(int? id);
-        void EditPhoto(PhotoDto photoDto);
-        List<PhotoDto> GetAllPhotos(string login, string sortOrder, string userOwner, int page, int pageSize);
-        int GetAllPhotosCountByUser(string login);
-        void SetPhotoRating(int photoId, int currentUserRating, string loginUser);
-        */
+        
+        void SetPhotoRating(int photoId, int userId, int rating);
+        
     }
 }

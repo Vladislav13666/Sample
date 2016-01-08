@@ -127,10 +127,59 @@ namespace PhotoGallery.DomainModel.Impl
             db.SaveChanges();
         }
 
-        public PhotoDto[] GetPhotosByUserId(int userId,int page,int pageSize)
-        {           
+        public PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize)
+        {
+            var photos = db.Photos.OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize);
+            var ratings = db.UserRatings.Where(u => u.UserId == userObserverId);
+            var photoScore = from p in photos
+                             join r in ratings
+                                on p.PhotoId equals r.PhotoId
+                                into pr
+                             from b in pr.DefaultIfEmpty()
+                             select new PhotoDto
+                             {
+                                 PhotoId = p.PhotoId,
+                                 UserId = p.UserId,
+                                 AverageRating = p.AllVotes == 0 ? 0 : p.AllRating / p.AllVotes,
+                                 CreateTime = p.CreateTime,
+                                 ImagePath = p.ImagePath,
+                                 PhotoOwner = p.PhotoOwner,
+                                 CurrentUserRating = (b == null ? 0 : b.Rating)
+                             };
+
+            return photoScore.ToArray();
+
+        }
+
+        
+
+        public PhotoDto[] GetPhotosByUserId(int userId,int userObserverId,int page,int pageSize)
+        {
+            var photos = db.Photos.Where(u => u.UserId == userId).OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize);
+            var ratings = db.UserRatings.Where(u => u.UserId == userObserverId);
+            var photoScore = from p in photos
+                             join r in ratings
+                                on p.PhotoId equals r.PhotoId
+                                into pr
+                             from b in pr.DefaultIfEmpty()
+                             select new PhotoDto
+                             {
+                                 PhotoId = p.PhotoId,
+                                 UserId = p.UserId,
+                                 AverageRating = p.AllVotes == 0 ? 0 : p.AllRating / p.AllVotes,
+                                 CreateTime = p.CreateTime,
+                                 ImagePath = p.ImagePath,
+                                 PhotoOwner = p.PhotoOwner,
+                                 CurrentUserRating = (b == null ? 0 : b.Rating)
+                             };
+
+            return photoScore.ToArray();               
+        }
+
+        public PhotoDto[] GetUserAlbum(int userId, int page, int pageSize)
+        {
             var photos = db.Photos.Where(u => u.UserId == userId).OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize).ToArray();
-            return Mapper.Map<Photo[], PhotoDto[]>(photos);          
+            return Mapper.Map<Photo[], PhotoDto[]>(photos);       
         }
 
         public PhotoInfoDto GetPhotoInfo(int photoId)
@@ -163,6 +212,7 @@ namespace PhotoGallery.DomainModel.Impl
             {
                 throw new ArgumentNullException();
             }
+            db.UserRatings.RemoveRange(db.UserRatings.Where(u => u.PhotoId == photoId));           
             db.Photos.Remove(photo);
             db.SaveChanges();
 
@@ -176,155 +226,30 @@ namespace PhotoGallery.DomainModel.Impl
             }
           return db.Photos.Count();
         }
+      
 
-        public PhotoDto[] GetPhotos(int page, int pageSize)
+        public void SetPhotoRating(int photoId, int userId, int rating)
         {
-            var photos = db.Photos.OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize).ToArray();
-            return Mapper.Map<Photo[], PhotoDto[]>(photos);
+            var photo = db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
+            var userPhotoRating = db.UserRatings.Where(p => p.PhotoId == photoId).Where(p => p.UserId == userId).FirstOrDefault();
+            if (userPhotoRating == null)
+            {
+                db.UserRatings.Add(new UserRating { UserId = userId, PhotoId = photoId, Rating = rating });
+                photo.AllVotes++;
+                photo.AllRating += rating;
+                db.SaveChanges();
+            }
+            else
+            {
+                photo.AllRating += rating - userPhotoRating.Rating;
+                userPhotoRating.Rating = rating;
+                db.Entry(userPhotoRating).State = EntityState.Modified;
+                db.Entry(photo).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
     }
 }
        
 
-                    
-/*
-             
-
-              
-
-                public List<PhotoDto> FindUserPhotosByLogin(string login, int page, int pageSize)
-                {
-                    List<PhotoDto> photosDto = new List<PhotoDto>();
-                    var userDto = FindUserByLogin(login);
-                    if (userDto != null)
-                    {
-                        var photos = db.Photos.Where(u => u.UserId == userDto.Id).ToList();
-                        foreach (var photo in photos)
-                        {
-                            photosDto.Add(new PhotoDto
-                            {
-                                PhotoId = photo.PhotoId,
-                                NameImage = photo.NameImage,
-                                ImagePath = photo.ImagePath,
-                                AverageRating = photo.AllVotes == 0 ? 0 : (int)photo.AllRating / photo.AllVotes,
-                                CreateTime = photo.CreateTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))
-                            });
-                        }
-                        return photosDto.OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-                    }
-                    return null;
-                }
-
-                public List<PhotoDto> GetAllPhotos(string login, string sortOrder, string userOwner, int page, int pageSize)
-                {
-                    //// в начале сортируем, потом делаем Skip и Take, потом маппим на List<PhotoDto>
-                    ///ThenBy, убрать все навигационные свойста и Include
-
-                    //var rating = from p in db.UserRatings
-                    //             where p.UserId == userId
-                    //             select u;
-
-                    //IEnumerable<Photo> photos = from photo in db.Photos
-                    //                            orderby photo.AllRatings descending, photo.PhotoId descending
-                    //                            select photo;
-
-
-
-                    //var photoScore = from bk in photos
-                    //                 join ordr in rating
-                    //                    on bk.PhotoId equals ordr.PhotoId
-                    //                    into a
-                    //                 from b in a.DefaultIfEmpty()
-                    //                 select new PhotoDto
-                    //                 {
-                    //                     PhotoId = bk.PhotoId,
-                    //                     Rating = (b == null ? 0 : b.UserRating)
-                    //                     ///все остальные свойства PhotoDto
-                    //                 };
-
-                    //return photoScore;
-
-
-                    /// так писать плохо
-                    var Album = new List<PhotoDto>();
-                    UserRating ratingCurUser = null;
-                    var photos = db.Photos.Include(c => c.UserRatings).Include(c => c.User);
-                    var userObserver = FindUserByLogin(login);
-                    var photoAlbumOwner = FindUserByLogin(userOwner);
-                    if (photoAlbumOwner != null)
-                    {
-                        photos = photos.Where(u => u.UserId == photoAlbumOwner.Id);
-                    }
-
-                    foreach (var m in photos)
-                    {
-                        if (userObserver != null)
-                        {
-                            ratingCurUser = m.UserRatings.Where(u => u.PhotoId == m.PhotoId).FirstOrDefault(u => u.UserId == userObserver.Id);
-                        }
-
-                        Album.Add(new PhotoDto
-                        {
-                            PhotoId = m.PhotoId,
-                            UserId = m.UserId,
-                            PhotoOwner = m.User.Login,
-                            NameImage = m.NameImage,
-                            ImagePath = m.ImagePath,
-                            CurrentUserRating = ratingCurUser == null ? 0 : ratingCurUser.Rating,
-                            AverageRating = m.AllVotes == 0 ? 0 : (int)m.AllRating / m.AllVotes,
-                            CreateTime = m.CreateTime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))
-                        });
-                    }
-                    switch (sortOrder)
-                    {
-                        case "rating":
-                            Album = Album.OrderByDescending(u => u.PhotoId).ToList();
-                            Album = Album.OrderByDescending(u => u.AverageRating).ToList();
-                            break;
-                        case "date":
-                            Album = Album.OrderByDescending(u => u.PhotoId).ToList();
-                            break;
-                        default:
-                            Album = Album.OrderBy(u => u.PhotoId).ToList();
-                            break;
-                    }
-                    return Album.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-                }
-
-                public int GetAllPhotosCountByUser(string login)
-                {
-                    var user = FindUserByLogin(login);
-                    if (user != null)
-                    {
-                        return db.Photos.Where(u => u.UserId == user.Id).Count();
-                    }
-                    return db.Photos.Count();
-                }
-
-                public void SetPhotoRating(int photoId, int currentUserRating, string loginUser)
-                {
-                    var user = FindUserByLogin(loginUser);
-                    Photo photo = db.Photos.Where(p => p.PhotoId == photoId).FirstOrDefault();
-                    var userPhotoRating = db.UserRatings.Where(p => p.PhotoId == photo.PhotoId).Where(p => p.UserId == user.Id).FirstOrDefault();
-                    if (userPhotoRating == null)
-                    {
-                        db.UserRatings.Add(new UserRating { UserId = user.Id, PhotoId = photoId, Rating = currentUserRating });
-                        photo.AllVotes++;
-                        photo.AllRating += currentUserRating;
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        photo.AllRating += currentUserRating - userPhotoRating.Rating;
-                        userPhotoRating.Rating = currentUserRating;
-                        db.Entry(userPhotoRating).State = EntityState.Modified;
-                        db.Entry(photo).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-
-                }
-
-                #endregion
-            */
-    
 

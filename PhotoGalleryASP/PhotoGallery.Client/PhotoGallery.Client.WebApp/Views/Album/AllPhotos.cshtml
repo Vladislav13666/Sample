@@ -12,10 +12,20 @@
 
 @section scripts {
     <script type="text/javascript">
-       
+
+        function setRating(rating,photoId) {  $.ajax({
+            type: 'GET',
+            url: '@Url.Action("SetPhotoRating")',
+            data: {
+                rating: rating,
+                photoId: photoId
+            },
+        });
+        }
+
         $(document).ready(function () {
             $.ajaxSetup({ cache: false });
-           
+
         });
     </script>
     }
