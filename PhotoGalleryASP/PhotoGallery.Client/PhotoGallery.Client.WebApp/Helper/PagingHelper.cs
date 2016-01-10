@@ -14,17 +14,17 @@ namespace PhotoGallery.Client.WebApp.Helper
         {
             StringBuilder builder = new StringBuilder();
                         
-            var prevBuilder = new TagBuilder("a");
-            prevBuilder.InnerHtml = "«";
-            if (currentPage == 1)
-            {
-                prevBuilder.MergeAttribute("href", "#");
-            }
-            else
-            {
-                prevBuilder.MergeAttribute("href", pageUrl.Invoke(currentPage - 1));
-            }
-            builder.AppendLine(prevBuilder.ToString());
+            //var prevBuilder = new TagBuilder("a");
+            //prevBuilder.InnerHtml = "«";
+            //if (currentPage == 1)
+            //{
+            //    prevBuilder.MergeAttribute("href", "#");
+            //}
+            //else
+            //{
+            //    prevBuilder.MergeAttribute("href", pageUrl.Invoke(currentPage - 1));
+            //}
+            //builder.AppendLine(prevBuilder.ToString());
                       
             for (int i = 1; i <= totalPages; i++)
             {               
@@ -56,17 +56,17 @@ namespace PhotoGallery.Client.WebApp.Helper
                 }
             }
           
-            var nextBuilder = new TagBuilder("a");
-            nextBuilder.InnerHtml = "»";
-            if (currentPage == totalPages)
-            {
-                nextBuilder.MergeAttribute("href", "#");
-            }
-            else
-            {
-                nextBuilder.MergeAttribute("href", pageUrl.Invoke(currentPage + 1));
-            }
-            builder.AppendLine(nextBuilder.ToString());
+            //var nextBuilder = new TagBuilder("a");
+            //nextBuilder.InnerHtml = "»";
+            //if (currentPage == totalPages)
+            //{
+            //    nextBuilder.MergeAttribute("href", "#");
+            //}
+            //else
+            //{
+            //    nextBuilder.MergeAttribute("href", pageUrl.Invoke(currentPage + 1));
+            //}
+            //builder.AppendLine(nextBuilder.ToString());
             return new MvcHtmlString(builder.ToString());
         }
     }

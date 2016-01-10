@@ -14,6 +14,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
     public class AlbumController : Controller
     {
         private IPhotoGalleryService _service;
+        int pageSize = 2;
 
         public AlbumController(IPhotoGalleryService service)
         {
@@ -21,36 +22,24 @@ namespace PhotoGallery.Client.WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult AllPhotos(int page = 1)
-        {
-            int pageSize = 1;
-            var photos = _service.GetPhotos((User as PhotoGalleryPrincipal).Id,page, pageSize).
+        [Authorize]
+        public ActionResult AllPhotos(int? userId = null,int page = 1)
+        {           
+            var photos = _service.GetPhotos((User as PhotoGalleryPrincipal).Id,userId,page, pageSize).
                 Select(Mapper.Map<PhotoDto, PhotoModel>);
-            var count=_service.GetPhotoCount(null);
-            var data = new PageableData<PhotoModel>(photos, page, count, pageSize);
-            return View(data);
-
-        }
-
-        [HttpGet]
-        public ActionResult UserPhotos(int userId,int page=1)
-        {
-            int pageSize = 1;
-            var photos=_service.GetPhotosByUserId(userId, (User as PhotoGalleryPrincipal).Id,page, pageSize).Select(Mapper.Map<PhotoDto, PhotoModel>);
-            var count = _service.GetPhotoCount(userId);
+            var count=_service.GetPhotoCount(userId);
             var data = new PageableData<PhotoModel>(photos, page, count, pageSize,userId);
             return View(data);
-        }
+
+        }               
         
         [Authorize]
-        [HttpGet]
+        [HttpPost]
         public ActionResult SetPhotoRating(int photoId,int rating)
         {         
             _service.SetPhotoRating(photoId, (User as PhotoGalleryPrincipal).Id,rating);
-            return RedirectToAction("AllPhotos");
-        }
-
-        
+            return Json("add rating");
+        }       
 
 
 

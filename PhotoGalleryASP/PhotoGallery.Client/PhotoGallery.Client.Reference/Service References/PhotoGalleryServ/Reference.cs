@@ -622,17 +622,11 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/AddPhoto", ReplyAction="http://tempuri.org/IPhotoGalleryService/AddPhotoResponse")]
         System.Threading.Tasks.Task AddPhotoAsync(PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto photoDto);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserId", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserIdResponse")]
-        PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotosByUserId(int userId, int userObserverId, int page, int pageSize);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserId", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserIdResponse")]
-        System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosByUserIdAsync(int userId, int userObserverId, int page, int pageSize);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotos", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotosResponse")]
+        PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotos(int userObserverId, System.Nullable<int> userId, int page, int pageSize);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotos", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotosResponse")]
-        PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotos", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotosResponse")]
-        System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosAsync(int userObserverId, int page, int pageSize);
+        System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosAsync(int userObserverId, System.Nullable<int> userId, int page, int pageSize);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetUserAlbum", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetUserAlbumResponse")]
         PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetUserAlbum(int userId, int page, int pageSize);
@@ -754,20 +748,12 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
             return base.Channel.AddPhotoAsync(photoDto);
         }
         
-        public PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotosByUserId(int userId, int userObserverId, int page, int pageSize) {
-            return base.Channel.GetPhotosByUserId(userId, userObserverId, page, pageSize);
+        public PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotos(int userObserverId, System.Nullable<int> userId, int page, int pageSize) {
+            return base.Channel.GetPhotos(userObserverId, userId, page, pageSize);
         }
         
-        public System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosByUserIdAsync(int userId, int userObserverId, int page, int pageSize) {
-            return base.Channel.GetPhotosByUserIdAsync(userId, userObserverId, page, pageSize);
-        }
-        
-        public PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize) {
-            return base.Channel.GetPhotos(userObserverId, page, pageSize);
-        }
-        
-        public System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosAsync(int userObserverId, int page, int pageSize) {
-            return base.Channel.GetPhotosAsync(userObserverId, page, pageSize);
+        public System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosAsync(int userObserverId, System.Nullable<int> userId, int page, int pageSize) {
+            return base.Channel.GetPhotosAsync(userObserverId, userId, page, pageSize);
         }
         
         public PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetUserAlbum(int userId, int page, int pageSize) {

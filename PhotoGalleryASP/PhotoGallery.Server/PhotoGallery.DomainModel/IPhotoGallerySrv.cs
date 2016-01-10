@@ -17,11 +17,9 @@ namespace PhotoGallery.DomainModel
         UserDto UpdateUserEmail(int userId, string newEmail);
         void UpdateUserPassword(int userId, string currentPassword, string newPassword);
 
-        void AddPhoto(PhotoDto photoDto);
+        void AddPhoto(PhotoDto photoDto);           
 
-        PhotoDto[] GetPhotosByUserId(int userId, int userObserverId, int page, int pageSize);
-
-        PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize);
+        PhotoDto[] GetPhotos(int userObserverId, int? userId, int page, int pageSize);
 
         PhotoDto[] GetUserAlbum(int userId, int page, int pageSize);
 

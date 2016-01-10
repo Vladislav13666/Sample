@@ -127,9 +127,15 @@ namespace PhotoGallery.DomainModel.Impl
             db.SaveChanges();
         }
 
-        public PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize)
+        public PhotoDto[] GetPhotos(int userObserverId,int? userId, int page, int pageSize)
         {
-            var photos = db.Photos.OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize);
+            IQueryable<Photo> photos= db.Photos;
+            if (userId != null)
+            {
+                photos = photos.Where(u => u.UserId == userId);
+            }
+
+            photos=photos.OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize);
             var ratings = db.UserRatings.Where(u => u.UserId == userObserverId);
             var photoScore = from p in photos
                              join r in ratings
@@ -144,37 +150,13 @@ namespace PhotoGallery.DomainModel.Impl
                                  CreateTime = p.CreateTime,
                                  ImagePath = p.ImagePath,
                                  PhotoOwner = p.PhotoOwner,
-                                 CurrentUserRating = (b == null ? 0 : b.Rating)
+                                 CurrentUserRating = (b == null ? 0 : b.Rating),
+                                 Title=p.Title
                              };
 
             return photoScore.ToArray();
 
-        }
-
-        
-
-        public PhotoDto[] GetPhotosByUserId(int userId,int userObserverId,int page,int pageSize)
-        {
-            var photos = db.Photos.Where(u => u.UserId == userId).OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize);
-            var ratings = db.UserRatings.Where(u => u.UserId == userObserverId);
-            var photoScore = from p in photos
-                             join r in ratings
-                                on p.PhotoId equals r.PhotoId
-                                into pr
-                             from b in pr.DefaultIfEmpty()
-                             select new PhotoDto
-                             {
-                                 PhotoId = p.PhotoId,
-                                 UserId = p.UserId,
-                                 AverageRating = p.AllVotes == 0 ? 0 : p.AllRating / p.AllVotes,
-                                 CreateTime = p.CreateTime,
-                                 ImagePath = p.ImagePath,
-                                 PhotoOwner = p.PhotoOwner,
-                                 CurrentUserRating = (b == null ? 0 : b.Rating)
-                             };
-
-            return photoScore.ToArray();               
-        }
+        }       
 
         public PhotoDto[] GetUserAlbum(int userId, int page, int pageSize)
         {

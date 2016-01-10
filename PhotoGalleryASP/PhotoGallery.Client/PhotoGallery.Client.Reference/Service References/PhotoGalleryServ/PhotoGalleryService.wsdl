@@ -62,12 +62,6 @@
   <wsdl:message name="IPhotoGalleryService_AddPhoto_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddPhotoResponse" />
   </wsdl:message>
-  <wsdl:message name="IPhotoGalleryService_GetPhotosByUserId_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetPhotosByUserId" />
-  </wsdl:message>
-  <wsdl:message name="IPhotoGalleryService_GetPhotosByUserId_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetPhotosByUserIdResponse" />
-  </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_GetPhotos_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPhotos" />
   </wsdl:message>
@@ -142,10 +136,6 @@
     <wsdl:operation name="AddPhoto">
       <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/AddPhoto" message="tns:IPhotoGalleryService_AddPhoto_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/AddPhotoResponse" message="tns:IPhotoGalleryService_AddPhoto_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetPhotosByUserId">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserId" message="tns:IPhotoGalleryService_GetPhotosByUserId_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserIdResponse" message="tns:IPhotoGalleryService_GetPhotosByUserId_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPhotos">
       <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetPhotos" message="tns:IPhotoGalleryService_GetPhotos_InputMessage" />
@@ -246,15 +236,6 @@
     </wsdl:operation>
     <wsdl:operation name="AddPhoto">
       <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/AddPhoto" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetPhotosByUserId">
-      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/GetPhotosByUserId" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

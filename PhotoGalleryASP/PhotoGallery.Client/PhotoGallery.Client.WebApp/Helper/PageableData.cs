@@ -17,10 +17,10 @@ namespace PhotoGallery.Client.WebApp.Helper
 
         public int ItemPerPage { get; set; }
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
+        
 
-
-           public PageableData(IEnumerable<T> enumerableSet, int page, int countPhoto,int itemPerPage, int userId=0)
+           public PageableData(IEnumerable<T> enumerableSet, int page, int countPhoto,int itemPerPage, int? userId=null)
         {
             ItemPerPage = itemPerPage;
             PageNo = page;
@@ -28,6 +28,7 @@ namespace PhotoGallery.Client.WebApp.Helper
             var count = countPhoto;            
             CountPage = (int)decimal.Remainder(count, itemPerPage) == 0 ? count / itemPerPage : count / itemPerPage + 1;
             List = enumerableSet;
+            
         }
     }
 }

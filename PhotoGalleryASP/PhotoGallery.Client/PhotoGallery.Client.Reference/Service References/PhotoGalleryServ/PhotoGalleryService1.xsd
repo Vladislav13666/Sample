@@ -97,27 +97,11 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetPhotosByUserId">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="userId" type="xs:int" />
-        <xs:element minOccurs="0" name="userObserverId" type="xs:int" />
-        <xs:element minOccurs="0" name="page" type="xs:int" />
-        <xs:element minOccurs="0" name="pageSize" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetPhotosByUserIdResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetPhotosByUserIdResult" nillable="true" type="q6:ArrayOfPhotoDto" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetPhotos">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userObserverId" type="xs:int" />
+        <xs:element minOccurs="0" name="userId" nillable="true" type="xs:int" />
         <xs:element minOccurs="0" name="page" type="xs:int" />
         <xs:element minOccurs="0" name="pageSize" type="xs:int" />
       </xs:sequence>
@@ -126,7 +110,7 @@
   <xs:element name="GetPhotosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetPhotosResult" nillable="true" type="q7:ArrayOfPhotoDto" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetPhotosResult" nillable="true" type="q6:ArrayOfPhotoDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -142,7 +126,7 @@
   <xs:element name="GetUserAlbumResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetUserAlbumResult" nillable="true" type="q8:ArrayOfPhotoDto" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetUserAlbumResult" nillable="true" type="q7:ArrayOfPhotoDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -156,7 +140,7 @@
   <xs:element name="GetPhotoInfoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetPhotoInfoResult" nillable="true" type="q9:PhotoInfoDto" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto" minOccurs="0" name="GetPhotoInfoResult" nillable="true" type="q8:PhotoInfoDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -131,18 +131,17 @@ namespace PhotoGallery.Client.WebApp.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        //[ChildActionOnly] верни короче все назад бля!!!!
-        public PartialViewResult ChangeUserEmail(EditUserEmail editUserMail)
+        [Authorize]       
+        public ActionResult ChangeUserEmail(EditUserEmail editUserMail)
         {
             try
             {
-                _service.UpdateUserEmail(editUserMail.Id, editUserMail.NewEmail);
+                _service.UpdateUserEmail(editUserMail.Id, editUserMail.NewEmail);           
+                
             }
             catch { }
-
-            return PartialView();      
-          //  return RedirectToAction("EditProfile", new { login= editUserMail.Login});
+                 
+           return RedirectToAction("EditProfile", new { login= editUserMail.Login});
         }
 
         [HttpPost]
@@ -157,7 +156,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
                 }
                 catch (FaultException)
                 {
-                    return PartialView();
+                   
                 }            
             }
 

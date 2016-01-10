@@ -1,0 +1,33 @@
+﻿/* Styles for photo elements
+-----------------------------------------------------------*/
+.image-container {
+    margin: 0 auto;
+    max-width: 960px;
+    width: 96%;
+}
+
+.photo-info {
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 3px;
+    width: 96%;
+}
+
+.image {
+    height: auto;
+    width: 100%;
+}
+
+.image-title {
+    font-family: Verdana, sans-serif;
+    font-size: 32px;
+    width: 80%;
+    word-wrap: break-word;
+}
+
+.image-description {
+    margin-top: 2%;
+    font-family: Verdana, sans-serif;
+    max-width: 80%;
+    word-wrap: break-word;
+}

@@ -83,8 +83,12 @@ namespace PhotoGallery.Client.WebApp.Controllers
         [Authorize]
         public ActionResult EditPhoto(PhotoEditModel photoModel)
         {
-             _service.UpdatePhotoInfo(photoModel.PhotoId, photoModel.Title);
-             return RedirectToAction("Manage");
+            if (ModelState.IsValid)
+            {
+                _service.UpdatePhotoInfo(photoModel.PhotoId, photoModel.Title);
+                return RedirectToAction("Manage");
+            }
+            return PartialView("EditPhoto",photoModel);
         }
               
         [HttpGet]

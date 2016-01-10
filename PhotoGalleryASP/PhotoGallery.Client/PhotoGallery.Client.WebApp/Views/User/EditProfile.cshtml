@@ -17,3 +17,30 @@
 </body>
 </html>
 
+
+@section scripts {
+    <script type="text/javascript">
+
+        function UpdateEmail() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("DeletePhoto")',
+                data: { photoId: photoId },
+                success: function (result) {
+                    $("#dialogContent").html(result);
+                }
+            });
+        }
+
+      
+        //$(document).ready(function () {
+        //    $.ajaxSetup({ cache: false });
+
+
+        //});
+    </script>
+}
+
+
+
+

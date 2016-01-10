@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/jquery-ui.css")
+    @Styles.Render("~/Content/Photo")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
@@ -18,12 +19,15 @@
         <div class="container">
           <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Action("AllPhotos", "Album")">AllPhotos</a></li>
-                   @if (Request.IsAuthenticated)
-                   {
-                    <li>
-                        <a href="@Url.Action("Manage", "UserAlbum")">MyPhotos</a>
-                    </li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>
+                    <a href="@Url.Action("AllPhotos", "Album")">AllPhotos</a>
+                        </li>    
+                                    
+                        <li>
+                            <a href="@Url.Action("Manage", "UserAlbum")">MyPhotos</a>
+                        </li>
                    }
                 </ul>
               <ul class="nav navbar-nav navbar-right">

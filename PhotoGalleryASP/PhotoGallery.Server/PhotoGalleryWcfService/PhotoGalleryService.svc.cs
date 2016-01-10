@@ -83,16 +83,11 @@ namespace PhotoGalleryWcfService
         }
         public void AddPhoto(PhotoDto photoDto) {
             photoGallerySrv.AddPhoto(photoDto);
-        }
+        }               
 
-        public PhotoDto[] GetPhotosByUserId(int userId, int userObserverId, int page, int pageSize)
+        public PhotoDto[] GetPhotos(int userObserverId, int? userId, int page, int pageSize)
         {
-           return photoGallerySrv.GetPhotosByUserId(userId, userObserverId, page, pageSize);
-        }
-
-        public PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize)
-        {
-            return photoGallerySrv.GetPhotos(userObserverId, page, pageSize);
+            return photoGallerySrv.GetPhotos(userObserverId, userId, page, pageSize);
         }
 
 

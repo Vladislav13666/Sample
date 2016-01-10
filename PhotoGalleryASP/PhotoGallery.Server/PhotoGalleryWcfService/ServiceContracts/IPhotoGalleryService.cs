@@ -36,13 +36,10 @@ namespace PhotoGalleryWcfService.ServiceContracts
         void UpdateUserInfo(int userId,string firstName,string secondName);
 
         [OperationContract]
-        void AddPhoto(PhotoDto photoDto);
+        void AddPhoto(PhotoDto photoDto);              
 
         [OperationContract]
-        PhotoDto[] GetPhotosByUserId(int userId, int userObserverId, int page, int pageSize);
-
-        [OperationContract]
-        PhotoDto[] GetPhotos(int userObserverId, int page, int pageSize);
+        PhotoDto[] GetPhotos(int userObserverId, int? userId, int page, int pageSize);
 
         [OperationContract]
         PhotoDto[] GetUserAlbum(int userId, int page, int pageSize);
@@ -62,6 +59,5 @@ namespace PhotoGalleryWcfService.ServiceContracts
 
         [OperationContract]
         void SetPhotoRating(int photoId, int userId, int rating);
-
-         }
+    }
 }
