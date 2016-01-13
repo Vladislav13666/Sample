@@ -45,7 +45,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
                 {
                     _service.CreateUser(userRegister);
                      Authorize(userRegister.Login, userRegister.Password);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("AllPhotos", "Album");
                 }
                 catch (FaultException<ServiceValidationError> ex)
                 {
@@ -69,7 +69,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
                         ModelState.AddModelError("", "Unable to log in. Please check that you have entered your login and password correctly");
                         return View(loginUserModel);
                     }
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("AllPhotos", "Album");
                 }
                 catch (FaultException<ServiceValidationError> ex)
                 {
@@ -112,7 +112,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("LogIn", "User");
         }
 
         [Authorize]
@@ -121,7 +121,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
         {
             if (login != User.Identity.Name)
             {
-                return RedirectToAction("Index","Home");
+               return RedirectToAction("AllPhotos", "Album") ;
             }
             var userInfo = _service.FindUserByUserLogin(login);
             ViewData["Info"] = Mapper.Map<UserDto, EditUserInfo>(userInfo);
@@ -134,14 +134,18 @@ namespace PhotoGallery.Client.WebApp.Controllers
         [Authorize]       
         public ActionResult ChangeUserEmail(EditUserEmail editUserMail)
         {
-            try
+            if (ModelState.IsValid)
             {
-                _service.UpdateUserEmail(editUserMail.Id, editUserMail.NewEmail);           
-                
+                try
+                {
+                    _service.UpdateUserEmail(editUserMail.Id, editUserMail.NewEmail);
+                    return RedirectToAction("EditProfile", new { login = editUserMail.Login });
+                }
+                catch (FaultException<ServiceValidationError> ex) {
+                    return Json("a user with the same email already exists");
+                }              
             }
-            catch { }
-                 
-           return RedirectToAction("EditProfile", new { login= editUserMail.Login});
+            return Json("invalid model");
         }
 
         [HttpPost]
@@ -153,14 +157,16 @@ namespace PhotoGallery.Client.WebApp.Controllers
                 try
                 {
                     _service.UpdateUserPassword(editUserPassword.Id, editUserPassword.CurrentPassword, editUserPassword.NewPassword);
+                    return RedirectToAction("EditProfile", new { login = editUserPassword.Login });
                 }
-                catch (FaultException)
+                catch (FaultException<ServiceValidationError>)
                 {
-                   
+                    return Json("wrong password");
                 }            
             }
+            return Json("invalid model");
 
-            return RedirectToAction("EditProfile", new { login = editUserPassword.Login });
+          
         }
 
         [HttpPost]
@@ -169,15 +175,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _service.UpdateUserInfo(editUserInfo.Id, editUserInfo.FirstName, editUserInfo.LastName);
-                }
-                catch
-                {
-                    return View();
-                }
-
+              _service.UpdateUserInfo(editUserInfo.Id, editUserInfo.FirstName, editUserInfo.LastName);
             }
             return RedirectToAction("EditProfile", new { login = editUserInfo.Login });
 

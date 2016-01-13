@@ -23,6 +23,8 @@ namespace PhotoGalleryWcfService
         {
             this.photoGallerySrv = photoGallerySrv;
         }
+
+        #region UserService
         public void CreateUser(UserRegisterDto user)
         {
             try
@@ -42,7 +44,7 @@ namespace PhotoGalleryWcfService
             {
                 return photoGallerySrv.AuthenticateUser(login, password);
             }
-            catch (UserNotFoundException ex)
+            catch (MissingDataException ex)
             {               
                 throw new FaultException<ServiceDataError>(new ServiceDataError(ex.Message));
             }
@@ -59,31 +61,74 @@ namespace PhotoGalleryWcfService
 
         public UserDto UpdateUserEmail(int userId, string newEmail)
         {
-          return photoGallerySrv.UpdateUserEmail(userId, newEmail);
+            try
+            {
+                return photoGallerySrv.UpdateUserEmail(userId, newEmail);
+            }
+            catch (UserDataException ex){
+                throw new FaultException<ServiceValidationError>(new ServiceValidationError(ex.Message));
+            }
         }
 
         public void UpdateUserPassword(int userId, string currentPassword, string newPassword)
         {
-            photoGallerySrv.UpdateUserPassword(userId, currentPassword,newPassword);
+            try
+            {
+                photoGallerySrv.UpdateUserPassword(userId, currentPassword, newPassword);
+            }
+            catch (UserDataException ex)
+            {
+                throw new FaultException<ServiceValidationError>(new ServiceValidationError(ex.Message));
+            }
         }
 
         public void UpdateUserInfo(int userId,string firstName,string secondName)
-        {
-            try
-            {
-                photoGallerySrv.UpdateUserInfo(userId,firstName,secondName);
-            }
-           
-            catch (ArgumentException ex)
-            {
-                ServiceDataError srvError = new ServiceDataError(ex.Message);
-                throw new FaultException<ServiceDataError>(srvError);
-            }        
-           
+        {           
+                photoGallerySrv.UpdateUserInfo(userId,firstName,secondName);                             
         }
+
+        #endregion
+
+        #region PhotoService
         public void AddPhoto(PhotoDto photoDto) {
             photoGallerySrv.AddPhoto(photoDto);
         }               
+
+        public PhotoInfoDto GetPhotoInfo(int photoId)
+        {
+            try
+            {
+                return photoGallerySrv.GetPhotoInfo(photoId);
+            }
+            catch (MissingDataException ex)
+            {
+                throw new FaultException<ServiceDataError>(new ServiceDataError(ex.Message));
+            }       
+        }
+
+        public void UpdatePhotoInfo(int photoId, string photoName)
+        {
+            try
+            {
+                photoGallerySrv.UpdatePhotoInfo(photoId, photoName);
+            }
+            catch (MissingDataException ex)
+            {
+                throw new FaultException<ServiceDataError>(new ServiceDataError(ex.Message));
+            }
+        }
+
+        public void DeletePhoto(int photoId)
+        {
+            try
+            {
+                photoGallerySrv.DeletePhoto(photoId);
+            }
+            catch (MissingDataException ex)
+            {
+                throw new FaultException<ServiceDataError>(new ServiceDataError(ex.Message));
+            }
+        }
 
         public PhotoDto[] GetPhotos(int userObserverId, int? userId, int page, int pageSize)
         {
@@ -93,32 +138,15 @@ namespace PhotoGalleryWcfService
 
         public PhotoDto[] GetUserAlbum(int userId, int page, int pageSize)
         {
-            return photoGallerySrv.GetUserAlbum(userId,page, pageSize);
+            return photoGallerySrv.GetUserAlbum(userId, page, pageSize);
         }
-
-        public PhotoInfoDto GetPhotoInfo(int photoId)
-        {
-            return photoGallerySrv.GetPhotoInfo(photoId);
-        }
-
-        public void UpdatePhotoInfo(int photoId, string photoName)
-        {
-            photoGallerySrv.UpdatePhotoInfo(photoId, photoName);
-        }
-
-        public void DeletePhoto(int photoId)
-        {
-            photoGallerySrv.DeletePhoto(photoId);
-        }
-
-        public int GetPhotoCount(int? userId)
-        {
-            return photoGallerySrv.GetPhotoCount(userId);
-        }
+              
         public void SetPhotoRating(int photoId, int userId, int rating)
         {
             photoGallerySrv.SetPhotoRating(photoId, userId,rating);
         }
+
+        #endregion
 
     }
 }

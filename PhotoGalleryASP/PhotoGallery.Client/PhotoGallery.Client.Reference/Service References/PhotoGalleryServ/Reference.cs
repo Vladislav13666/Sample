@@ -599,18 +599,25 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
         System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto> FindUserByUserLoginAsync(string login);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserEmail", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserEmailResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceValidationError), Action="http://tempuri.org/IPhotoGalleryService/UpdateUserEmailServiceValidationErrorFaul" +
+            "t", Name="ServiceValidationError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceDataError), Action="http://tempuri.org/IPhotoGalleryService/UpdateUserEmailServiceDataErrorFault", Name="ServiceDataError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
         PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto UpdateUserEmail(int userId, string newEmail);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserEmail", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserEmailResponse")]
         System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto> UpdateUserEmailAsync(int userId, string newEmail);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserPassword", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserPasswordResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceValidationError), Action="http://tempuri.org/IPhotoGalleryService/UpdateUserPasswordServiceValidationErrorF" +
+            "ault", Name="ServiceValidationError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceDataError), Action="http://tempuri.org/IPhotoGalleryService/UpdateUserPasswordServiceDataErrorFault", Name="ServiceDataError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
         void UpdateUserPassword(int userId, string currentPassword, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserPassword", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserPasswordResponse")]
         System.Threading.Tasks.Task UpdateUserPasswordAsync(int userId, string currentPassword, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserInfoResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceDataError), Action="http://tempuri.org/IPhotoGalleryService/UpdateUserInfoServiceDataErrorFault", Name="ServiceDataError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
         void UpdateUserInfo(int userId, string firstName, string secondName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserInfoResponse")]
@@ -635,28 +642,25 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
         System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetUserAlbumAsync(int userId, int page, int pageSize);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotoInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotoInfoResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceDataError), Action="http://tempuri.org/IPhotoGalleryService/GetPhotoInfoServiceDataErrorFault", Name="ServiceDataError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
         PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoInfoDto GetPhotoInfo(int photoId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotoInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotoInfoResponse")]
         System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoInfoDto> GetPhotoInfoAsync(int photoId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdatePhotoInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdatePhotoInfoResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceDataError), Action="http://tempuri.org/IPhotoGalleryService/UpdatePhotoInfoServiceDataErrorFault", Name="ServiceDataError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
         void UpdatePhotoInfo(int photoId, string photoName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdatePhotoInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdatePhotoInfoResponse")]
         System.Threading.Tasks.Task UpdatePhotoInfoAsync(int photoId, string photoName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/DeletePhoto", ReplyAction="http://tempuri.org/IPhotoGalleryService/DeletePhotoResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceDataError), Action="http://tempuri.org/IPhotoGalleryService/DeletePhotoServiceDataErrorFault", Name="ServiceDataError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
         void DeletePhoto(int photoId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/DeletePhoto", ReplyAction="http://tempuri.org/IPhotoGalleryService/DeletePhotoResponse")]
         System.Threading.Tasks.Task DeletePhotoAsync(int photoId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotoCount", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotoCountResponse")]
-        int GetPhotoCount(System.Nullable<int> userId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotoCount", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotoCountResponse")]
-        System.Threading.Tasks.Task<int> GetPhotoCountAsync(System.Nullable<int> userId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/SetPhotoRating", ReplyAction="http://tempuri.org/IPhotoGalleryService/SetPhotoRatingResponse")]
         void SetPhotoRating(int photoId, int userId, int rating);
@@ -786,14 +790,6 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
         
         public System.Threading.Tasks.Task DeletePhotoAsync(int photoId) {
             return base.Channel.DeletePhotoAsync(photoId);
-        }
-        
-        public int GetPhotoCount(System.Nullable<int> userId) {
-            return base.Channel.GetPhotoCount(userId);
-        }
-        
-        public System.Threading.Tasks.Task<int> GetPhotoCountAsync(System.Nullable<int> userId) {
-            return base.Channel.GetPhotoCountAsync(userId);
         }
         
         public void SetPhotoRating(int photoId, int userId, int rating) {

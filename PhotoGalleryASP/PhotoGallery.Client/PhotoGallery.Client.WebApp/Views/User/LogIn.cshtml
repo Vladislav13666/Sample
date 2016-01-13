@@ -1,6 +1,6 @@
 ﻿@model PhotoGallery.Client.WebApp.Models.UserViewModel.LoginUserModel
 
-<h4>LogIn</h4>
+<h4 class="col-md-offset-1">LogIn</h4>
 @using (Html.BeginForm("LogIn", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()

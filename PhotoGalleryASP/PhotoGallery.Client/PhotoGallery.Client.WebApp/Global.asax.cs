@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PhotoGallery.Client.WebApp.App_Start;
 using PhotoGallery.Client.WebApp.Auth;
+using PhotoGallery.Client.WebApp.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,8 @@ namespace PhotoGallery.Client.WebApp
         {
             AreaRegistration.RegisterAllAreas();
             AutofacConfig.ConfigureContainer();
-            UserAutoMapper.RegisterMappings();
-            PhotoAutoMapper.RegisterMappings();
+            UserMapping.RegisterMappings();
+            PhotoMapping.RegisterMappings();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

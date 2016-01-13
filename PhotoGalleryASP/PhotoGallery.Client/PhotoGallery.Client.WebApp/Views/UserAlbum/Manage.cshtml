@@ -1,5 +1,7 @@
-﻿@using PhotoGallery.Client.WebApp.Helper;
-@model PageableData<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>
+﻿@*@using PhotoGallery.Client.WebApp.Helper;
+@model PageableData<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>*@
+
+@model IEnumerable<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>
 
 
 <html>
@@ -7,26 +9,56 @@
        
 </head>
 <body>
-    <div class="rows">
+   
           
         <button type="button" class="viewDialog col-md-offset-1" onclick="photoCreate()">
             <span class="glyphicon glyphicon-save"></span>Upload Photo
         </button>
-    
-
-        <div class="pagination col-md-offset-1">
-            @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action("Manage", new { page = x }))
-        </div>
-
-    </div>    
+        
 
 
         <div id="contentPlace">
-           @Html.Partial("PhotoCollection", Model.List);           
+           @Html.Partial("PhotoCollection");           
         </div>
 
         @section scripts {
     <script type="text/javascript">
+
+        $(function () {
+
+            var page = 0;
+            var _inCallback = false;
+            function loadItems() {
+                if (page > -1 && !_inCallback) {
+                    _inCallback = true;
+                    page++;
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("Manage", "UserAlbum")' + '?page=' + page,
+                        success: function (data, textstatus) {
+                            if (data != '') {
+                                $("#contentPlace").append(data);
+                            }
+                            else {
+                                page = -1;
+                            }
+                            _inCallback = false;
+
+                        }
+                    });
+                }
+            }
+
+
+
+            $(window).scroll(function () {
+                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+
+                    loadItems();
+                }
+            });
+        })
 
     
         function photoCreate() {
@@ -41,11 +73,12 @@
         }
 
         function photoEdit(photoId) {
-            $.ajax({
+          $.ajax({
                 type: 'GET',
                 url: '@Url.Action("EditPhoto")',
                 data: { photoId: photoId },
                 success: function (result) {
+                    alert("edit");
                    $("#dialogContent").html(result);
                 }
             });
@@ -70,6 +103,7 @@
 
         $(".viewDialog").on("click", function (e) {
             e.preventDefault();
+            alert("view");
 
             $("<div id='dialogContent'></div>")
                 .addClass("dialog")

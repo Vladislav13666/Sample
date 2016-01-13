@@ -22,7 +22,8 @@ namespace PhotoGallery.DomainModel.Impl
             db = context;
         }
 
-            
+
+        #region UserService    
         public void CreateUser(UserRegisterDto user)
         {
             if (db.Users.FirstOrDefault(u => u.Login == user.Login) == null &&
@@ -44,7 +45,7 @@ namespace PhotoGallery.DomainModel.Impl
             var user = db.GetUserByUserLogin(login);
             if (user == null)
             {
-                throw new UserNotFoundException(login);
+                throw new MissingDataException(login);
             }               
             if (AuthorizationHelper.CheckPassword(password, user))
             {
@@ -59,7 +60,7 @@ namespace PhotoGallery.DomainModel.Impl
             var user=db.GetUserByUserLogin(login);
             if (user == null)
             {
-                throw new UserNotFoundException(login);
+                throw new MissingDataException(login);
             }               
             return Mapper.Map<User, UserDto>(user);
         }
@@ -70,7 +71,7 @@ namespace PhotoGallery.DomainModel.Impl
             var oldUser = db.GetUserByUserId(userId);
             if (oldUser == null)
             {
-                throw new UserNotFoundException("user not found");
+                throw new MissingDataException("user not found");
             }
 
             if (db.Users.FirstOrDefault(u => u.Email == newEmail) == null)
@@ -92,7 +93,7 @@ namespace PhotoGallery.DomainModel.Impl
                var oldUser = db.GetUserByUserId(userId);
                 if (oldUser == null)
                 {
-                    throw new UserNotFoundException("user not found");
+                    throw new MissingDataException("user not found");
                 }
             if (AuthorizationHelper.CheckPassword(currentPassword, oldUser))
             {
@@ -112,7 +113,7 @@ namespace PhotoGallery.DomainModel.Impl
            var oldUser = db.GetUserByUserId(userId);
             if (oldUser == null)
             {
-              throw new UserNotFoundException("user not found");
+              throw new MissingDataException("user not found");
             }
             oldUser.FirstName = firstName;
             oldUser.LastName = secondName;
@@ -120,6 +121,9 @@ namespace PhotoGallery.DomainModel.Impl
             db.SaveChanges();
         }
 
+        #endregion
+
+        #region PhotoGalleryService
         public void AddPhoto(PhotoDto photoDto)
         {
            var photo=Mapper.Map<PhotoDto, Photo>(photoDto);
@@ -127,15 +131,55 @@ namespace PhotoGallery.DomainModel.Impl
             db.SaveChanges();
         }
 
-        public PhotoDto[] GetPhotos(int userObserverId,int? userId, int page, int pageSize)
+        public PhotoInfoDto GetPhotoInfo(int photoId)
         {
-            IQueryable<Photo> photos= db.Photos;
+          var photo= db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
+            if (photo != null)
+            {
+               return Mapper.Map<Photo, PhotoInfoDto> (photo);
+            }
+
+            throw new MissingDataException();
+        }
+
+        public void UpdatePhotoInfo(int photoId, string photoName)
+        {
+            var photo = db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
+            if (photo != null)
+            {
+                photo.Title = photoName;
+                db.Entry(photo).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else {
+                throw new MissingDataException();
+            }
+
+        }
+
+        public void DeletePhoto(int photoId)
+        {
+            var photo = db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
+            if (photo == null)
+            {
+                throw new MissingDataException();
+            }
+            db.UserRatings.RemoveRange(db.UserRatings.Where(u => u.PhotoId == photoId));           
+            db.Photos.Remove(photo);
+            db.SaveChanges();
+
+
+        }
+
+        public PhotoDto[] GetPhotos(int userObserverId, int? userId, int page, int pageSize)
+        {
+            IQueryable<Photo> photos = db.Photos;
             if (userId != null)
             {
                 photos = photos.Where(u => u.UserId == userId);
             }
 
-            photos=photos.OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize);
+            photos = photos.OrderBy(u => u.PhotoId).Skip(page * pageSize).Take(pageSize);
             var ratings = db.UserRatings.Where(u => u.UserId == userObserverId);
             var photoScore = from p in photos
                              join r in ratings
@@ -151,64 +195,20 @@ namespace PhotoGallery.DomainModel.Impl
                                  ImagePath = p.ImagePath,
                                  PhotoOwner = p.PhotoOwner,
                                  CurrentUserRating = (b == null ? 0 : b.Rating),
-                                 Title=p.Title
+                                 Title = p.Title
                              };
 
             return photoScore.ToArray();
 
-        }       
+        }
 
         public PhotoDto[] GetUserAlbum(int userId, int page, int pageSize)
         {
-            var photos = db.Photos.Where(u => u.UserId == userId).OrderBy(u => u.PhotoId).Skip((page - 1) * pageSize).Take(pageSize).ToArray();
-            return Mapper.Map<Photo[], PhotoDto[]>(photos);       
+            var photos = db.Photos.Where(u => u.UserId == userId).OrderBy(u => u.PhotoId).Skip(page  * pageSize)
+                .Take(pageSize).ToArray();
+            return Mapper.Map<Photo[], PhotoDto[]>(photos);
         }
-
-        public PhotoInfoDto GetPhotoInfo(int photoId)
-        {
-          var photo= db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
-            if (photo != null)
-            {
-               return Mapper.Map<Photo, PhotoInfoDto> (photo);
-            }
-
-            throw new NotImplementedException();
-        }
-
-        public void UpdatePhotoInfo(int photoId, string photoName)
-        {
-            var photo = db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
-            if (photo != null)
-            {
-                photo.Title = photoName;
-                db.Entry(photo).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-
-        }
-
-        public void DeletePhoto(int photoId)
-        {
-            var photo = db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
-            if (photo == null)
-            {
-                throw new ArgumentNullException();
-            }
-            db.UserRatings.RemoveRange(db.UserRatings.Where(u => u.PhotoId == photoId));           
-            db.Photos.Remove(photo);
-            db.SaveChanges();
-
-
-        }
-
-        public int GetPhotoCount(int? userId)
-        {
-            if (userId != null) {
-                return db.Photos.Where(u => u.UserId == userId).Count();
-            }
-          return db.Photos.Count();
-        }
-      
+                   
 
         public void SetPhotoRating(int photoId, int userId, int rating)
         {
@@ -230,6 +230,7 @@ namespace PhotoGallery.DomainModel.Impl
                 db.SaveChanges();
             }
         }
+        #endregion
     }
 }
        

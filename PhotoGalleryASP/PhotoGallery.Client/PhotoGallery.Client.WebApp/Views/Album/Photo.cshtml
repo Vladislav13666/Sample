@@ -11,7 +11,7 @@
       
         <div class="author-info">
             <br />
-            Added By @Html.ActionLink(Model.PhotoOwner, "AllPhotos", new { userId = Model.UserId }) @Model.CreateTime.ToString("f")
+            Added By @Html.ActionLink(Model.PhotoOwner, "UserPhotos", new { userId = Model.UserId }) @Model.CreateTime.ToString("f")
         </div>
         <br />
         <div>

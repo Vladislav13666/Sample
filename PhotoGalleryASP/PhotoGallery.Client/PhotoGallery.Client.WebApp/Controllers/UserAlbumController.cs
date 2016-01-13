@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,8 +17,8 @@ namespace PhotoGallery.Client.WebApp.Controllers
     public class UserAlbumController : Controller
     {
         private IPhotoGalleryService _service;
-        
-       
+        const int pageSize = 2;
+
         public UserAlbumController(IPhotoGalleryService service)
         {
             _service = service;
@@ -25,16 +26,21 @@ namespace PhotoGallery.Client.WebApp.Controllers
 
        [Authorize]     
        [HttpGet]  
-        public ActionResult Manage(int page=1)
+        public ActionResult Manage(int page=0)
         {
-            int pageSize = 1;           
-            var photos = _service.GetUserAlbum((User as PhotoGalleryPrincipal).Id, page, pageSize).
-                Select(Mapper.Map<PhotoDto, PhotoModel>);
-            var count = _service.GetPhotoCount((User as PhotoGalleryPrincipal).Id);
-            var data = new PageableData<PhotoModel>(photos, page, count, pageSize);
-            return View(data);
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("PhotoCollection", GetItemsPage(page));
+            }
+            return View(GetItemsPage(page));
         }
-              
+
+        private IEnumerable<PhotoModel> GetItemsPage(int page)
+        {
+            return _service.GetUserAlbum((User as PhotoGalleryPrincipal).Id, page, pageSize).
+                Select(Mapper.Map<PhotoDto, PhotoModel>);
+        }
+
 
 
         [HttpGet]
@@ -103,17 +109,18 @@ namespace PhotoGallery.Client.WebApp.Controllers
         [Authorize]
         public ActionResult DeletePhoto(PhotoDeleteModel photo)
         {
-            _service.DeletePhoto(photo.PhotoId);
-            FileInfo fileInf = new FileInfo(Server.MapPath(photo.ImagePath));
-            fileInf.Delete();
-            return RedirectToAction("Manage");
-        }
+            try
+            {
+                _service.DeletePhoto(photo.PhotoId);
+                FileInfo fileInf = new FileInfo(Server.MapPath(photo.ImagePath));
+                fileInf.Delete();
+                return RedirectToAction("Manage");
+            }
+            catch (FaultException<ServiceDataError> ex)
+            {
+                return Json("User attempts delete non-existent photo");
+            }
+        }     
 
-       
-
-
-    }
-
-
-   
+    }   
 }

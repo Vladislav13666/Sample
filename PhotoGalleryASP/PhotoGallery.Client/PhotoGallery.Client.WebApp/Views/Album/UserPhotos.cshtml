@@ -1,0 +1,69 @@
+﻿@model PhotoGallery.Client.WebApp.Models.PhotoViewModel.UserAlbum
+
+<div id="contentPlace">
+    @Html.Partial("PhotoCollection", Model.Photos)
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+
+       $(function () {
+
+           var page = 0;
+    var _inCallback = false;
+    function loadItems() {
+        if (page > -1 && !_inCallback) {
+            _inCallback = true;
+            page++;
+
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("UserPhotos","Album",new {userId=Model.OwnerId })' +'?page='+ page,
+                success: function (data, textstatus) {
+                    if (data != '') {
+
+                        $("#contentPlace").append(data);
+                    }
+                    else {
+                        page = -1;
+                    }
+                    _inCallback = false;
+
+                }
+            });
+        }
+    }
+
+
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+
+            loadItems();
+        }
+    });
+})
+
+        function setRating(rating, photoId) {
+            $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SetPhotoRating")',
+                data: {
+                rating: rating,
+                photoId: photoId,
+                },
+                success: function () {
+                    window.location.reload();
+                }
+            });
+        }
+
+
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: false });
+
+
+        });
+    </script>
+}
+

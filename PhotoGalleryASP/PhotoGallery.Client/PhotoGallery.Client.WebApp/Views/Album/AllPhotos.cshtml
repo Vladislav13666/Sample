@@ -1,26 +1,63 @@
-﻿@using PhotoGallery.Client.WebApp.Helper
-@model PageableData<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>
+﻿@*@using PhotoGallery.Client.WebApp.Helper
+@model PageableData<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>*@
 
+
+@model IEnumerable<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>
+
+@*@model PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoAlbum*@
 
 <div id="contentPlace">
-      @Html.Partial("PhotoCollection",Model.List)
+      @Html.Partial("PhotoCollection")
 </div>
-
-<div class="pagination col-md-offset-1">
-    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action("AllPhotos", new { page = x, userId = Model.UserId }))
-</div>
-
 
 @section scripts {
     <script type="text/javascript">
 
+       $(function () {
+
+           var page = 0;
+    var _inCallback = false;
+    function loadItems() {
+        if (page > -1 && !_inCallback) {
+            _inCallback = true;
+            page++;
+
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("AllPhotos","Album")' +'?page='+ page,
+                //'/Album/AllPhotos/' + page,
+                success: function (data, textstatus) {
+                    if (data != '') {
+
+                        $("#contentPlace").append(data);
+                    }
+                    else {
+                        page = -1;
+                    }
+                    _inCallback = false;
+
+                }
+            });
+        }
+    }
+
+
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+
+            loadItems();
+        }
+    });
+})
+
         function setRating(rating, photoId) {
             $.ajax({
             type: 'POST',
-            url: '@Url.Action("SetPhotoRating",new {page=Model.PageNo,userId=Model.UserId })',
-                data: {                
+            url: '@Url.Action("SetPhotoRating")',
+                data: {
                 rating: rating,
-                photoId: photoId,                           
+                photoId: photoId,
                 },
                 success: function () {
                     window.location.reload();
@@ -28,11 +65,11 @@
             });
         }
 
-      
+
         $(document).ready(function () {
             $.ajaxSetup({ cache: false });
 
-           
+
         });
     </script>
 }

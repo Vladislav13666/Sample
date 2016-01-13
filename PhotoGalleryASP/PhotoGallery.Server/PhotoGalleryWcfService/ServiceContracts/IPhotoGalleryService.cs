@@ -12,6 +12,8 @@ namespace PhotoGalleryWcfService.ServiceContracts
         [ServiceContract]
         public interface IPhotoGalleryService
         {
+        #region UserService
+
         [OperationContract]
         [FaultContract(typeof(ServiceValidationError))]
         void CreateUser(UserRegisterDto user);     
@@ -26,14 +28,23 @@ namespace PhotoGalleryWcfService.ServiceContracts
         UserDto FindUserByUserLogin(string login);
 
         [OperationContract]
+        [FaultContract(typeof(ServiceValidationError))]
+        [FaultContract(typeof(ServiceDataError))]
         UserDto UpdateUserEmail(int userId, string newEmail);
 
         [OperationContract]
+        [FaultContract(typeof(ServiceValidationError))]
+        [FaultContract(typeof(ServiceDataError))]
         void UpdateUserPassword(int userId, string currentPassword, string newPassword);
 
 
         [OperationContract]
+        [FaultContract(typeof(ServiceDataError))]
         void UpdateUserInfo(int userId,string firstName,string secondName);
+
+        #endregion
+
+        #region PhotoGalleryService
 
         [OperationContract]
         void AddPhoto(PhotoDto photoDto);              
@@ -46,18 +57,20 @@ namespace PhotoGalleryWcfService.ServiceContracts
 
 
         [OperationContract]
+        [FaultContract(typeof(ServiceDataError))]
         PhotoInfoDto GetPhotoInfo(int photoId);
 
         [OperationContract]
+        [FaultContract(typeof(ServiceDataError))]
         void UpdatePhotoInfo(int photoId, string photoName);
 
         [OperationContract]
-        void DeletePhoto(int photoId);
-
-        [OperationContract]
-        int GetPhotoCount(int? userId);
+        [FaultContract(typeof(ServiceDataError))]
+        void DeletePhoto(int photoId);      
 
         [OperationContract]
         void SetPhotoRating(int photoId, int userId, int rating);
+
+        #endregion
     }
 }

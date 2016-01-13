@@ -60,7 +60,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserRating.cs" />
     <Compile Include="Exceptions\UserDataException.cs" />
-    <Compile Include="Exceptions\UserNotFoundException.cs" />
+    <Compile Include="Exceptions\MissingDataException.cs" />
     <Compile Include="Impl\PhotoGallerySrv.cs" />
     <Compile Include="IPhotoGallerySrv.cs" />
     <Compile Include="Mapping\PhotoMapping.cs" />
