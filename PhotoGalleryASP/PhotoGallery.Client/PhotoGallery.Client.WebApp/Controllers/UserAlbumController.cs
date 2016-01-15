@@ -26,8 +26,11 @@ namespace PhotoGallery.Client.WebApp.Controllers
 
        [Authorize]     
        [HttpGet]  
-        public ActionResult Manage(int page=0)
+        public ActionResult Manage(string login,int page=0)
         {
+            if (login != User.Identity.Name) {
+                return View("Error");
+            }
             if (Request.IsAjaxRequest())
             {
                 return PartialView("PhotoCollection", GetItemsPage(page));

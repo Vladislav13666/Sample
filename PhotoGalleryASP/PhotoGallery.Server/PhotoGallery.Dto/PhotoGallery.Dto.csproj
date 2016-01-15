@@ -46,6 +46,7 @@
     <Compile Include="PhotoInfoDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDto.cs" />
+    <Compile Include="UserInfoDto.cs" />
     <Compile Include="UserRegisterDto.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

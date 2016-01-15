@@ -64,7 +64,17 @@ namespace PhotoGallery.DomainModel.Impl
             }               
             return Mapper.Map<User, UserDto>(user);
         }
-             
+
+        public UserInfoDto GetUserPublicInfo(string login)
+        {
+            var user = db.GetUserByUserLogin(login);
+            if (user == null)
+            {
+                throw new MissingDataException(login);
+            }
+            return Mapper.Map<User, UserInfoDto>(user);
+        }
+
 
         public UserDto UpdateUserEmail(int userId, string newEmail)
         {
@@ -179,7 +189,7 @@ namespace PhotoGallery.DomainModel.Impl
                 photos = photos.Where(u => u.UserId == userId);
             }
 
-            photos = photos.OrderBy(u => u.PhotoId).Skip(page * pageSize).Take(pageSize);
+            photos = photos.OrderByDescending(u => u.PhotoId).Skip(page * pageSize).Take(pageSize);
             var ratings = db.UserRatings.Where(u => u.UserId == userObserverId);
             var photoScore = from p in photos
                              join r in ratings
@@ -204,7 +214,7 @@ namespace PhotoGallery.DomainModel.Impl
 
         public PhotoDto[] GetUserAlbum(int userId, int page, int pageSize)
         {
-            var photos = db.Photos.Where(u => u.UserId == userId).OrderBy(u => u.PhotoId).Skip(page  * pageSize)
+            var photos = db.Photos.Where(u => u.UserId == userId).OrderByDescending(u => u.PhotoId).Skip(page  * pageSize)
                 .Take(pageSize).ToArray();
             return Mapper.Map<Photo[], PhotoDto[]>(photos);
         }

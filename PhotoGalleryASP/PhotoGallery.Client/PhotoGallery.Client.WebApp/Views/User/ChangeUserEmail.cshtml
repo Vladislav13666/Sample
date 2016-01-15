@@ -3,17 +3,16 @@
 @using (Html.BeginForm("ChangeUserEmail", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="form-horizontal">
-        <h4 class="col-md-offset-1">ChangeEmail</h4>
+        <h4 class="col-md-offset-1">Change Email</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Login)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CurrentEmail, new { @class = "control-label col-md-2" })
+        <div class="form-group">                 
+            @Html.LabelFor(m => m.CurrentEmail, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CurrentEmail)
-                @Html.ValidationMessageFor(model => model.CurrentEmail)
+                @Html.DisplayFor(m => m.CurrentEmail)               
             </div>
         </div>
 

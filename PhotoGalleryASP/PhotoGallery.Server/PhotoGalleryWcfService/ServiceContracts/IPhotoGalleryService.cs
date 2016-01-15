@@ -28,6 +28,10 @@ namespace PhotoGalleryWcfService.ServiceContracts
         UserDto FindUserByUserLogin(string login);
 
         [OperationContract]
+        [FaultContract(typeof(ServiceDataError))]
+        UserInfoDto GetUserPublicInfo(string login);
+
+        [OperationContract]
         [FaultContract(typeof(ServiceValidationError))]
         [FaultContract(typeof(ServiceDataError))]
         UserDto UpdateUserEmail(int userId, string newEmail);

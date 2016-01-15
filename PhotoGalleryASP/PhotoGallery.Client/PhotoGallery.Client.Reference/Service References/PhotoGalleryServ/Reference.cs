@@ -339,6 +339,83 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserInfoDto", Namespace="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto")]
+    [System.SerializableAttribute()]
+    public partial class UserInfoDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FullNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoginField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FullName {
+            get {
+                return this.FullNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
+                    this.FullNameField = value;
+                    this.RaisePropertyChanged("FullName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Login {
+            get {
+                return this.LoginField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PhotoDto", Namespace="http://schemas.datacontract.org/2004/07/PhotoGallery.Dto")]
     [System.SerializableAttribute()]
     public partial class PhotoDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -598,6 +675,13 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/FindUserByUserLogin", ReplyAction="http://tempuri.org/IPhotoGalleryService/FindUserByUserLoginResponse")]
         System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto> FindUserByUserLoginAsync(string login);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetUserPublicInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetUserPublicInfoResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceDataError), Action="http://tempuri.org/IPhotoGalleryService/GetUserPublicInfoServiceDataErrorFault", Name="ServiceDataError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
+        PhotoGallery.Client.Reference.PhotoGalleryServ.UserInfoDto GetUserPublicInfo(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetUserPublicInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetUserPublicInfoResponse")]
+        System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserInfoDto> GetUserPublicInfoAsync(string login);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserEmail", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserEmailResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceValidationError), Action="http://tempuri.org/IPhotoGalleryService/UpdateUserEmailServiceValidationErrorFaul" +
             "t", Name="ServiceValidationError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
@@ -718,6 +802,14 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
         
         public System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto> FindUserByUserLoginAsync(string login) {
             return base.Channel.FindUserByUserLoginAsync(login);
+        }
+        
+        public PhotoGallery.Client.Reference.PhotoGalleryServ.UserInfoDto GetUserPublicInfo(string login) {
+            return base.Channel.GetUserPublicInfo(login);
+        }
+        
+        public System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserInfoDto> GetUserPublicInfoAsync(string login) {
+            return base.Channel.GetUserPublicInfoAsync(login);
         }
         
         public PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto UpdateUserEmail(int userId, string newEmail) {

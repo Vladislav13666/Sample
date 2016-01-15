@@ -59,6 +59,17 @@ namespace PhotoGalleryWcfService
             return photoGallerySrv.FindUserByUserLogin(login);
         }
 
+        public UserInfoDto GetUserPublicInfo(string login)
+        {
+            try {
+                return photoGallerySrv.GetUserPublicInfo(login);
+            }
+            catch (MissingDataException ex)
+            {
+                throw new FaultException<ServiceDataError>(new ServiceDataError(ex.Message));
+            }
+        }
+
         public UserDto UpdateUserEmail(int userId, string newEmail)
         {
             try

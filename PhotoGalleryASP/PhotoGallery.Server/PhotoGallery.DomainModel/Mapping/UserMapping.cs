@@ -16,6 +16,7 @@ namespace PhotoGallery.DomainModel.Mapping
             Mapper.CreateMap<User, UserDto>();
             Mapper.CreateMap<UserDto, User>();
             Mapper.CreateMap<UserRegisterDto, User>();
+            Mapper.CreateMap<User, UserInfoDto>().ForMember("FullName", opt => opt.MapFrom(c => c.FirstName + " " + c.LastName));
         }
     }
 }

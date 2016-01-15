@@ -63,6 +63,9 @@
     <None Include="Service References\PhotoGalleryServ\PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\PhotoGalleryServ\PhotoGallery.Client.Reference.PhotoGalleryServ.UserInfoDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\PhotoGalleryServ\PhotoGalleryService.wsdl" />
     <None Include="Service References\PhotoGalleryServ\PhotoGalleryService.xsd">
       <SubType>Designer</SubType>

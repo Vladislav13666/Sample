@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotoGallery.Client.WebApp.Models.UserViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,12 +7,13 @@ using System.Web;
 namespace PhotoGallery.Client.WebApp.Models.PhotoViewModel
 {
     public class UserAlbum
-    {
-        public int? OwnerId { get; set; }
+    {     
+        public UserPublicInfo UserPublicInfo { get; set; }
         public IEnumerable<PhotoModel> Photos { get; set; }
 
-        public UserAlbum(IEnumerable<PhotoModel> photos,int? userId=null) {
-            OwnerId = userId;
+        public UserAlbum(UserPublicInfo userPublicInfo, IEnumerable<PhotoModel> photos)
+        {
+            UserPublicInfo = userPublicInfo;
             Photos = photos;
         }
     }

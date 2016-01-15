@@ -21,6 +21,14 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UserDto" nillable="true" type="tns:UserDto" />
+  <xs:complexType name="UserInfoDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserInfoDto" nillable="true" type="tns:UserInfoDto" />
   <xs:complexType name="PhotoDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="AverageRating" type="xs:int" />

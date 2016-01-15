@@ -3,9 +3,11 @@ using PhotoGallery.Client.Reference.PhotoGalleryServ;
 using PhotoGallery.Client.WebApp.Auth;
 using PhotoGallery.Client.WebApp.Helper;
 using PhotoGallery.Client.WebApp.Models.PhotoViewModel;
+using PhotoGallery.Client.WebApp.Models.UserViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Web;
 using System.Web.Mvc;
 
@@ -35,15 +37,23 @@ namespace PhotoGallery.Client.WebApp.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult UserPhotos(int userId,int page=0)
-        {           
-            UserAlbum userAlbum = new UserAlbum(GetItemsPage(page, userId), userId);
+        public ActionResult UserPhotos(string login,int page=0)
+        {
+            try {
+                var userInfoDto = _service.GetUserPublicInfo(login);
+                var userInfo = Mapper.Map<UserInfoDto, UserPublicInfo>(userInfoDto);
+                UserAlbum userAlbum = new UserAlbum(userInfo, GetItemsPage(page, userInfo.Id));
 
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("PhotoCollection", GetItemsPage(page, userId));
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("PhotoCollection", GetItemsPage(page, userInfo.Id));
+                }
+                return View(userAlbum);
             }
-            return View(userAlbum);
+            catch(FaultException<ServiceDataError>) {
+                return View("Error");
+            } 
+          
         }
 
         private IEnumerable<PhotoModel> GetItemsPage(int page, int? userId=null)

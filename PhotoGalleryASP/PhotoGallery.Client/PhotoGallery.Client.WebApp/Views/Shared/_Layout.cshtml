@@ -21,11 +21,11 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li>
-                    <a href="@Url.Action("AllPhotos", "Album")">AllPhotos</a>
+                    <a href="@Url.Action("AllPhotos", "Album")">All Photos</a>
                         </li>    
                                     
                         <li>
-                            <a href="@Url.Action("Manage", "UserAlbum")">MyPhotos</a>
+                            <a href="@Url.Action("Manage", "UserAlbum",new {login= User.Identity.Name })">My Photos</a>
                         </li>
                    }
                 </ul>
@@ -46,7 +46,7 @@
                             <li>
                                 <a href="@Url.Action("LogOut", "User")">
                                     <span class="glyphicon glyphicon-log-out"></span>
-                                    LogOut
+                                    Log Out
                                 </a>
                             </li>
                         </ul>
@@ -56,7 +56,7 @@
                   {
                     <li>
                         <a href="@Url.Action("LogIn", "User")">
-                            <span class="glyphicon glyphicon-log-in glyphicon-margin-right"></span>LogIn
+                            <span class="glyphicon glyphicon-log-in glyphicon-margin-right"></span>Log In
                         </a>
                     </li>
                   }

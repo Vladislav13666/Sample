@@ -1,5 +1,10 @@
 ﻿@model PhotoGallery.Client.WebApp.Models.PhotoViewModel.UserAlbum
 
+<div id="userInfo" class="col-md-offset-1">
+    <h2 id="userName">@Model.UserPublicInfo.Login</h2>
+    <h4 id="name">@Model.UserPublicInfo.FullName</h4>
+   </div>
+
 <div id="contentPlace">
     @Html.Partial("PhotoCollection", Model.Photos)
 </div>
@@ -18,7 +23,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("UserPhotos","Album",new {userId=Model.OwnerId })' +'?page='+ page,
+                url: '@Url.Action("UserPhotos","Album",new {login=Model.UserPublicInfo.Login })' +'?page='+ page,
                 success: function (data, textstatus) {
                     if (data != '') {
 

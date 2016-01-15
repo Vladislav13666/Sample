@@ -38,6 +38,15 @@
   <wsdl:message name="IPhotoGalleryService_FindUserByUserLogin_ServiceDataErrorFault_FaultMessage">
     <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q4:ServiceDataError" />
   </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetUserPublicInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserPublicInfo" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetUserPublicInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserPublicInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPhotoGalleryService_GetUserPublicInfo_ServiceDataErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q5:ServiceDataError" />
+  </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdateUserEmail_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateUserEmail" />
   </wsdl:message>
@@ -45,10 +54,10 @@
     <wsdl:part name="parameters" element="tns:UpdateUserEmailResponse" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdateUserEmail_ServiceValidationErrorFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q5:ServiceValidationError" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q6:ServiceValidationError" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdateUserEmail_ServiceDataErrorFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q6:ServiceDataError" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q7:ServiceDataError" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdateUserPassword_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateUserPassword" />
@@ -57,10 +66,10 @@
     <wsdl:part name="parameters" element="tns:UpdateUserPasswordResponse" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdateUserPassword_ServiceValidationErrorFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q7:ServiceValidationError" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q8:ServiceValidationError" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdateUserPassword_ServiceDataErrorFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q8:ServiceDataError" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q9:ServiceDataError" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdateUserInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateUserInfo" />
@@ -69,7 +78,7 @@
     <wsdl:part name="parameters" element="tns:UpdateUserInfoResponse" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdateUserInfo_ServiceDataErrorFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q9:ServiceDataError" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q10:ServiceDataError" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_AddPhoto_InputMessage">
     <wsdl:part name="parameters" element="tns:AddPhoto" />
@@ -96,7 +105,7 @@
     <wsdl:part name="parameters" element="tns:GetPhotoInfoResponse" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_GetPhotoInfo_ServiceDataErrorFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q10:ServiceDataError" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q11:ServiceDataError" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdatePhotoInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdatePhotoInfo" />
@@ -105,7 +114,7 @@
     <wsdl:part name="parameters" element="tns:UpdatePhotoInfoResponse" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_UpdatePhotoInfo_ServiceDataErrorFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q11:ServiceDataError" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q12:ServiceDataError" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_DeletePhoto_InputMessage">
     <wsdl:part name="parameters" element="tns:DeletePhoto" />
@@ -114,7 +123,7 @@
     <wsdl:part name="parameters" element="tns:DeletePhotoResponse" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_DeletePhoto_ServiceDataErrorFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q12:ServiceDataError" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions" name="detail" element="q13:ServiceDataError" />
   </wsdl:message>
   <wsdl:message name="IPhotoGalleryService_SetPhotoRating_InputMessage">
     <wsdl:part name="parameters" element="tns:SetPhotoRating" />
@@ -138,6 +147,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/FindUserByUserLogin" message="tns:IPhotoGalleryService_FindUserByUserLogin_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/FindUserByUserLoginResponse" message="tns:IPhotoGalleryService_FindUserByUserLogin_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IPhotoGalleryService/FindUserByUserLoginServiceDataErrorFault" name="ServiceDataErrorFault" message="tns:IPhotoGalleryService_FindUserByUserLogin_ServiceDataErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserPublicInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetUserPublicInfo" message="tns:IPhotoGalleryService_GetUserPublicInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetUserPublicInfoResponse" message="tns:IPhotoGalleryService_GetUserPublicInfo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPhotoGalleryService/GetUserPublicInfoServiceDataErrorFault" name="ServiceDataErrorFault" message="tns:IPhotoGalleryService_GetUserPublicInfo_ServiceDataErrorFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="UpdateUserEmail">
       <wsdl:input wsaw:Action="http://tempuri.org/IPhotoGalleryService/UpdateUserEmail" message="tns:IPhotoGalleryService_UpdateUserEmail_InputMessage" />
@@ -219,6 +233,18 @@
     </wsdl:operation>
     <wsdl:operation name="FindUserByUserLogin">
       <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/FindUserByUserLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceDataErrorFault">
+        <soap:fault use="literal" name="ServiceDataErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserPublicInfo">
+      <soap:operation soapAction="http://tempuri.org/IPhotoGalleryService/GetUserPublicInfo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

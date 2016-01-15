@@ -1,7 +1,4 @@
-﻿@*@using PhotoGallery.Client.WebApp.Helper;
-@model PageableData<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>*@
-
-@model IEnumerable<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>
+﻿@model IEnumerable<PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoModel>
 
 
 <html>
@@ -14,8 +11,7 @@
         <button type="button" class="viewDialog col-md-offset-1" onclick="photoCreate()">
             <span class="glyphicon glyphicon-save"></span>Upload Photo
         </button>
-        
-
+ 
 
         <div id="contentPlace">
            @Html.Partial("PhotoCollection");           
@@ -78,8 +74,7 @@
                 url: '@Url.Action("EditPhoto")',
                 data: { photoId: photoId },
                 success: function (result) {
-                    alert("edit");
-                   $("#dialogContent").html(result);
+                    $("#dialogContent").html(result);
                 }
             });
         }
@@ -93,18 +88,17 @@
                   $("#dialogContent").html(result);
                 }
              });
-        }                 
+        }
 
-
+      
         $(document).ready(function () {
 
             $.ajaxSetup({ cache: false });
                                          
 
-        $(".viewDialog").on("click", function (e) {
+        $("body").on("click",".viewDialog", function (e) {
             e.preventDefault();
-            alert("view");
-
+           
             $("<div id='dialogContent'></div>")
                 .addClass("dialog")
                 .appendTo("body")
@@ -126,7 +120,7 @@
             $(this).closest(".dialog").dialog("close");
         });
 
-    });
+  });
     </script>
 
         }

@@ -13,8 +13,7 @@ namespace PhotoGallery.Client.WebApp.Models.UserViewModel
 
         [Required]
         public string Login { get; set; }
-
-        [Required]
+               
         public string CurrentEmail { get; set; }
 
         [Required]

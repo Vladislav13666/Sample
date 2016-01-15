@@ -165,6 +165,7 @@
     <Compile Include="Models\UserViewModel\EditUserPassword.cs" />
     <Compile Include="Models\UserViewModel\LoginUserModel.cs" />
     <Compile Include="Models\UserViewModel\RegisterUserModel.cs" />
+    <Compile Include="Models\UserViewModel\UserPublicInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

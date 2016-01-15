@@ -13,7 +13,7 @@ namespace PhotoGallery.DomainModel
         void CreateUser(UserRegisterDto user);
         UserDto AuthenticateUser(string login,string password);
         UserDto FindUserByUserLogin(string login);
-
+        UserInfoDto GetUserPublicInfo(string login);
         void UpdateUserInfo(int userId, string firstName, string secondName);
         UserDto UpdateUserEmail(int userId, string newEmail);
         void UpdateUserPassword(int userId, string currentPassword, string newPassword);

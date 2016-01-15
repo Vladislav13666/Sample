@@ -11,23 +11,17 @@ namespace PhotoGallery.Client.WebApp
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            //routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            //);
+            
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
                 name: "UserPhotos",
-                url: "{userId}",
+                url: "{login}",
                 defaults: new { controller = "Album", action = "UserPhotos" });
 
             routes.MapRoute(
                 name: "Manage",
-                url: "{userName}/manage",
+                url: "{login}/manage",
                 defaults: new { controller = "UserAlbum", action = "Manage" });
 
             routes.MapRoute(
