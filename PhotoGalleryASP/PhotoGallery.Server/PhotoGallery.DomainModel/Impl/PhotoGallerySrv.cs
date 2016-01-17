@@ -26,8 +26,7 @@ namespace PhotoGallery.DomainModel.Impl
         #region UserService    
         public void CreateUser(UserRegisterDto user)
         {
-            if (db.Users.FirstOrDefault(u => u.Login == user.Login) == null &&
-                db.Users.FirstOrDefault(u => u.Email == user.Email) == null)
+            if(!db.Users.Any(u=>u.Login==user.Login) && !db.Users.Any(u => u.Email == user.Email))
             {
                 var newUser = Mapper.Map<UserRegisterDto, User>(user);
                 AuthorizationHelper.GenerateKey(user.Password, newUser);
@@ -83,22 +82,17 @@ namespace PhotoGallery.DomainModel.Impl
             {
                 throw new MissingDataException("user not found");
             }
-
-            if (db.Users.FirstOrDefault(u => u.Email == newEmail) == null)
-            {                              
-                oldUser.Email = newEmail;
-                db.Entry(oldUser).State = EntityState.Modified;
-                db.SaveChanges();
-                return Mapper.Map<User, UserDto>(oldUser);
-            }
-            else
+            if (db.Users.Any(u => u.Email== newEmail))
             {
                 throw new UserDataException(newEmail);
             }
-             
+            oldUser.Email = newEmail;
+            db.Entry(oldUser).State = EntityState.Modified;
+            db.SaveChanges();
+            return Mapper.Map<User, UserDto>(oldUser);         
         }
 
-        public void UpdateUserPassword(int userId,string currentPassword,string newPassword)
+        public UserDto UpdateUserPassword(int userId,string currentPassword,string newPassword)
         {
                var oldUser = db.GetUserByUserId(userId);
                 if (oldUser == null)
@@ -110,6 +104,7 @@ namespace PhotoGallery.DomainModel.Impl
                 AuthorizationHelper.GenerateKey(newPassword,oldUser);
                 db.Entry(oldUser).State = EntityState.Modified;
                 db.SaveChanges();
+                return Mapper.Map<User, UserDto>(oldUser);
             }
             else
             {
@@ -118,7 +113,7 @@ namespace PhotoGallery.DomainModel.Impl
                       
         }
 
-        public void UpdateUserInfo(int userId,string firstName,string secondName)
+        public UserDto UpdateUserInfo(int userId,string firstName,string secondName)
         {             
            var oldUser = db.GetUserByUserId(userId);
             if (oldUser == null)
@@ -129,6 +124,7 @@ namespace PhotoGallery.DomainModel.Impl
             oldUser.LastName = secondName;
             db.Entry(oldUser).State = EntityState.Modified;
             db.SaveChanges();
+            return Mapper.Map<User,UserDto>(oldUser);
         }
 
         #endregion
@@ -143,33 +139,30 @@ namespace PhotoGallery.DomainModel.Impl
 
         public PhotoInfoDto GetPhotoInfo(int photoId)
         {
-          var photo= db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
-            if (photo != null)
+            var photo = db.GetPhotoByPhotoId(photoId);
+            if (photo == null)
             {
-               return Mapper.Map<Photo, PhotoInfoDto> (photo);
+                throw new MissingDataException();
             }
-
-            throw new MissingDataException();
+            return Mapper.Map<Photo, PhotoInfoDto>(photo);
+           
         }
 
         public void UpdatePhotoInfo(int photoId, string photoName)
         {
-            var photo = db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
-            if (photo != null)
+            var photo = db.GetPhotoByPhotoId(photoId);
+            if (photo == null)
             {
-                photo.Title = photoName;
-                db.Entry(photo).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            else {
                 throw new MissingDataException();
             }
-
+            photo.Title = photoName;
+            db.Entry(photo).State = EntityState.Modified;
+            db.SaveChanges();         
         }
 
         public void DeletePhoto(int photoId)
         {
-            var photo = db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
+            var photo = db.GetPhotoByPhotoId(photoId);
             if (photo == null)
             {
                 throw new MissingDataException();
@@ -181,16 +174,12 @@ namespace PhotoGallery.DomainModel.Impl
 
         }
 
-        public PhotoDto[] GetPhotos(int userObserverId, int? userId, int page, int pageSize)
+        public PhotoDto[] GetPhotos(int userId, int? albumOwnerId, int page, int pageSize)
         {
-            IQueryable<Photo> photos = db.Photos;
-            if (userId != null)
-            {
-                photos = photos.Where(u => u.UserId == userId);
-            }
-
+            var photos = db.GetPhotos(albumOwnerId);
             photos = photos.OrderByDescending(u => u.PhotoId).Skip(page * pageSize).Take(pageSize);
-            var ratings = db.UserRatings.Where(u => u.UserId == userObserverId);
+            var ratings = db.GetRatingsByUserId(userId);
+
             var photoScore = from p in photos
                              join r in ratings
                                 on p.PhotoId equals r.PhotoId
@@ -214,16 +203,16 @@ namespace PhotoGallery.DomainModel.Impl
 
         public PhotoDto[] GetUserAlbum(int userId, int page, int pageSize)
         {
-            var photos = db.Photos.Where(u => u.UserId == userId).OrderByDescending(u => u.PhotoId).Skip(page  * pageSize)
-                .Take(pageSize).ToArray();
-            return Mapper.Map<Photo[], PhotoDto[]>(photos);
+            var photos = db.GetPhotos(userId);
+            photos = photos.OrderByDescending(u => u.PhotoId).Skip(page  * pageSize).Take(pageSize);
+            return Mapper.Map<Photo[], PhotoDto[]>(photos.ToArray());
         }
                    
 
         public void SetPhotoRating(int photoId, int userId, int rating)
         {
-            var photo = db.Photos.FirstOrDefault(p => p.PhotoId == photoId);
-            var userPhotoRating = db.UserRatings.Where(p => p.PhotoId == photoId).Where(p => p.UserId == userId).FirstOrDefault();
+            var photo = db.GetPhotoByPhotoId(photoId);
+            var userPhotoRating = db.GetUserPhotoRating(userId, photoId);
             if (userPhotoRating == null)
             {
                 db.UserRatings.Add(new UserRating { UserId = userId, PhotoId = photoId, Rating = rating });

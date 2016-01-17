@@ -81,11 +81,11 @@ namespace PhotoGalleryWcfService
             }
         }
 
-        public void UpdateUserPassword(int userId, string currentPassword, string newPassword)
+        public UserDto UpdateUserPassword(int userId, string currentPassword, string newPassword)
         {
             try
             {
-                photoGallerySrv.UpdateUserPassword(userId, currentPassword, newPassword);
+               return photoGallerySrv.UpdateUserPassword(userId, currentPassword, newPassword);
             }
             catch (UserDataException ex)
             {
@@ -93,9 +93,9 @@ namespace PhotoGalleryWcfService
             }
         }
 
-        public void UpdateUserInfo(int userId,string firstName,string secondName)
+        public UserDto UpdateUserInfo(int userId,string firstName,string secondName)
         {           
-                photoGallerySrv.UpdateUserInfo(userId,firstName,secondName);                             
+              return photoGallerySrv.UpdateUserInfo(userId,firstName,secondName);                             
         }
 
         #endregion
@@ -141,9 +141,9 @@ namespace PhotoGalleryWcfService
             }
         }
 
-        public PhotoDto[] GetPhotos(int userObserverId, int? userId, int page, int pageSize)
+        public PhotoDto[] GetPhotos(int userId, int? albumOwnerId, int page, int pageSize)
         {
-            return photoGallerySrv.GetPhotos(userObserverId, userId, page, pageSize);
+            return photoGallerySrv.GetPhotos(userId, albumOwnerId, page, pageSize);
         }
 
 

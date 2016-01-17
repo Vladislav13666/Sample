@@ -37,5 +37,25 @@ namespace PhotoGallery.DomainModel.Data
         {
             return Users.FirstOrDefault(u => u.Id == id);
         }
+
+        public Photo GetPhotoByPhotoId(int id) {
+            return Photos.FirstOrDefault(u => u.PhotoId == id);
+        }
+
+        public IQueryable<Photo> GetPhotos(int? userId) {
+            IQueryable<Photo> photos = Photos;
+            if (userId != null) {
+                photos = photos.Where(u=>u.UserId==userId);
+            }
+            return photos;
+        }
+
+        public IQueryable<UserRating> GetRatingsByUserId(int userId) {
+            return UserRatings.Where(u => u.UserId == userId);
+        }
+
+        public UserRating GetUserPhotoRating(int userId,int photoId) {
+            return UserRatings.Where(u => u.UserId == userId).Where(u=>u.PhotoId==photoId).FirstOrDefault();
+        }
     }
 }

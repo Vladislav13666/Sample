@@ -138,14 +138,16 @@ namespace PhotoGallery.Client.WebApp.Controllers
             {
                 try
                 {
-                    _service.UpdateUserEmail(editUserMail.Id, editUserMail.NewEmail);
-                    return RedirectToAction("EditProfile", new { login = editUserMail.Login });
+                    var userEmailDto=_service.UpdateUserEmail(editUserMail.Id, editUserMail.Email);
+                    var userEmail=Mapper.Map<UserDto, EditUserEmail>(userEmailDto);
+                    return PartialView("ChangeUserEmail", userEmail);
                 }
                 catch (FaultException<ServiceValidationError> ex) {
-                    return Json("a user with the same email already exists");
+                    ModelState.AddModelError("Email", "user with such email already exists");
                 }              
             }
-            return Json("invalid model");
+                      
+            return PartialView("ChangeUserEmail", editUserMail);
         }
 
         [HttpPost]
@@ -156,17 +158,18 @@ namespace PhotoGallery.Client.WebApp.Controllers
             {
                 try
                 {
-                    _service.UpdateUserPassword(editUserPassword.Id, editUserPassword.CurrentPassword, editUserPassword.NewPassword);
-                    return RedirectToAction("EditProfile", new { login = editUserPassword.Login });
+                    var userDto=_service.UpdateUserPassword(editUserPassword.Id, editUserPassword.CurrentPassword, editUserPassword.NewPassword);
+                    var userPasswordModel = Mapper.Map<UserDto, EditUserPassword>(userDto);
+                    return PartialView("ChangeUserPassword", userPasswordModel);
                 }
                 catch (FaultException<ServiceValidationError>)
                 {
-                    return Json("wrong password");
+                    ModelState.AddModelError("CurrentPassword", "wrong password");
                 }            
             }
-            return Json("invalid model");
+            return PartialView("ChangeUserPassword", editUserPassword);
 
-          
+
         }
 
         [HttpPost]
@@ -175,9 +178,11 @@ namespace PhotoGallery.Client.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-              _service.UpdateUserInfo(editUserInfo.Id, editUserInfo.FirstName, editUserInfo.LastName);
-            }
-            return RedirectToAction("EditProfile", new { login = editUserInfo.Login });
+                var editInfoDto = _service.UpdateUserInfo(editUserInfo.Id, editUserInfo.FirstName, editUserInfo.LastName);
+                var edit = Mapper.Map<UserDto, EditUserInfo>(editInfoDto);
+                return PartialView("ChangeUserInfo", edit);
+            }            
+            return Json("invalid model");
 
         }
 

@@ -39,12 +39,12 @@ namespace PhotoGalleryWcfService.ServiceContracts
         [OperationContract]
         [FaultContract(typeof(ServiceValidationError))]
         [FaultContract(typeof(ServiceDataError))]
-        void UpdateUserPassword(int userId, string currentPassword, string newPassword);
+        UserDto UpdateUserPassword(int userId, string currentPassword, string newPassword);
 
 
         [OperationContract]
         [FaultContract(typeof(ServiceDataError))]
-        void UpdateUserInfo(int userId,string firstName,string secondName);
+        UserDto UpdateUserInfo(int userId,string firstName,string secondName);
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace PhotoGalleryWcfService.ServiceContracts
         void AddPhoto(PhotoDto photoDto);              
 
         [OperationContract]
-        PhotoDto[] GetPhotos(int userObserverId, int? userId, int page, int pageSize);
+        PhotoDto[] GetPhotos(int userId, int? albumOwnerId, int page, int pageSize);
 
         [OperationContract]
         PhotoDto[] GetUserAlbum(int userId, int page, int pageSize);

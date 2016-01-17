@@ -13,9 +13,51 @@
         <p></p>
     <div id="resultDivEmail">@Html.Partial("ChangeUserEmail", @ViewData["Email"])</div>
         </div>
+      
+    
   
 </body>
 </html>
+
+@section scripts {
+    <script type="text/javascript">    
+      
+
+        $(document).ready(function () {
+            $('#editUserEmail').submit(function (event) {
+                event.preventDefault();
+                var data = $(this).serialize();
+                var url = $(this).attr('action');
+                $.post(url, data, function (response) {
+                    $('#resultDivEmail').empty();
+                    $('#resultDivEmail').html(response);
+                });
+            });
+
+            $('#editUserInfo').submit(function (event) {
+                event.preventDefault();
+                var data = $(this).serialize();
+                var url = $(this).attr('action');
+                $.post(url, data, function (response) {
+                    $('#resultDivInfo').empty();
+                    $('#resultDivInfo').html(response);
+                });
+            });
+
+            $('#editUserPassword').submit(function (event) {
+                event.preventDefault();
+                var data = $(this).serialize();
+                var url = $(this).attr('action');
+                $.post(url, data, function (response) {
+                    $('#resultDivPassword').empty();
+                    $('#resultDivPassword').html(response);
+                });
+            });
+        });
+               
+
+    </script>
+    }
 
 
 

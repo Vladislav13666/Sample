@@ -695,17 +695,17 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
         [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceValidationError), Action="http://tempuri.org/IPhotoGalleryService/UpdateUserPasswordServiceValidationErrorF" +
             "ault", Name="ServiceValidationError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceDataError), Action="http://tempuri.org/IPhotoGalleryService/UpdateUserPasswordServiceDataErrorFault", Name="ServiceDataError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
-        void UpdateUserPassword(int userId, string currentPassword, string newPassword);
+        PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto UpdateUserPassword(int userId, string currentPassword, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserPassword", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserPasswordResponse")]
-        System.Threading.Tasks.Task UpdateUserPasswordAsync(int userId, string currentPassword, string newPassword);
+        System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto> UpdateUserPasswordAsync(int userId, string currentPassword, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserInfoResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(PhotoGallery.Client.Reference.PhotoGalleryServ.ServiceDataError), Action="http://tempuri.org/IPhotoGalleryService/UpdateUserInfoServiceDataErrorFault", Name="ServiceDataError", Namespace="http://schemas.datacontract.org/2004/07/PhotoGalleryWcfService.Exceptions")]
-        void UpdateUserInfo(int userId, string firstName, string secondName);
+        PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto UpdateUserInfo(int userId, string firstName, string secondName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/UpdateUserInfo", ReplyAction="http://tempuri.org/IPhotoGalleryService/UpdateUserInfoResponse")]
-        System.Threading.Tasks.Task UpdateUserInfoAsync(int userId, string firstName, string secondName);
+        System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto> UpdateUserInfoAsync(int userId, string firstName, string secondName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/AddPhoto", ReplyAction="http://tempuri.org/IPhotoGalleryService/AddPhotoResponse")]
         void AddPhoto(PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto photoDto);
@@ -714,10 +714,10 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
         System.Threading.Tasks.Task AddPhotoAsync(PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto photoDto);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotos", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotosResponse")]
-        PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotos(int userObserverId, System.Nullable<int> userId, int page, int pageSize);
+        PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotos(int userId, System.Nullable<int> albumOwnerId, int page, int pageSize);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetPhotos", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetPhotosResponse")]
-        System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosAsync(int userObserverId, System.Nullable<int> userId, int page, int pageSize);
+        System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosAsync(int userId, System.Nullable<int> albumOwnerId, int page, int pageSize);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPhotoGalleryService/GetUserAlbum", ReplyAction="http://tempuri.org/IPhotoGalleryService/GetUserAlbumResponse")]
         PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetUserAlbum(int userId, int page, int pageSize);
@@ -820,19 +820,19 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
             return base.Channel.UpdateUserEmailAsync(userId, newEmail);
         }
         
-        public void UpdateUserPassword(int userId, string currentPassword, string newPassword) {
-            base.Channel.UpdateUserPassword(userId, currentPassword, newPassword);
+        public PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto UpdateUserPassword(int userId, string currentPassword, string newPassword) {
+            return base.Channel.UpdateUserPassword(userId, currentPassword, newPassword);
         }
         
-        public System.Threading.Tasks.Task UpdateUserPasswordAsync(int userId, string currentPassword, string newPassword) {
+        public System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto> UpdateUserPasswordAsync(int userId, string currentPassword, string newPassword) {
             return base.Channel.UpdateUserPasswordAsync(userId, currentPassword, newPassword);
         }
         
-        public void UpdateUserInfo(int userId, string firstName, string secondName) {
-            base.Channel.UpdateUserInfo(userId, firstName, secondName);
+        public PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto UpdateUserInfo(int userId, string firstName, string secondName) {
+            return base.Channel.UpdateUserInfo(userId, firstName, secondName);
         }
         
-        public System.Threading.Tasks.Task UpdateUserInfoAsync(int userId, string firstName, string secondName) {
+        public System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.UserDto> UpdateUserInfoAsync(int userId, string firstName, string secondName) {
             return base.Channel.UpdateUserInfoAsync(userId, firstName, secondName);
         }
         
@@ -844,12 +844,12 @@ namespace PhotoGallery.Client.Reference.PhotoGalleryServ {
             return base.Channel.AddPhotoAsync(photoDto);
         }
         
-        public PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotos(int userObserverId, System.Nullable<int> userId, int page, int pageSize) {
-            return base.Channel.GetPhotos(userObserverId, userId, page, pageSize);
+        public PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetPhotos(int userId, System.Nullable<int> albumOwnerId, int page, int pageSize) {
+            return base.Channel.GetPhotos(userId, albumOwnerId, page, pageSize);
         }
         
-        public System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosAsync(int userObserverId, System.Nullable<int> userId, int page, int pageSize) {
-            return base.Channel.GetPhotosAsync(userObserverId, userId, page, pageSize);
+        public System.Threading.Tasks.Task<PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[]> GetPhotosAsync(int userId, System.Nullable<int> albumOwnerId, int page, int pageSize) {
+            return base.Channel.GetPhotosAsync(userId, albumOwnerId, page, pageSize);
         }
         
         public PhotoGallery.Client.Reference.PhotoGalleryServ.PhotoDto[] GetUserAlbum(int userId, int page, int pageSize) {

@@ -14,15 +14,15 @@ namespace PhotoGallery.DomainModel
         UserDto AuthenticateUser(string login,string password);
         UserDto FindUserByUserLogin(string login);
         UserInfoDto GetUserPublicInfo(string login);
-        void UpdateUserInfo(int userId, string firstName, string secondName);
+        UserDto UpdateUserInfo(int userId, string firstName, string secondName);
         UserDto UpdateUserEmail(int userId, string newEmail);
-        void UpdateUserPassword(int userId, string currentPassword, string newPassword);
+        UserDto UpdateUserPassword(int userId, string currentPassword, string newPassword);
 
         #endregion
 
         #region PhotoService
         void AddPhoto(PhotoDto photoDto);           
-        PhotoDto[] GetPhotos(int userObserverId, int? userId, int page, int pageSize);
+        PhotoDto[] GetPhotos(int userId, int? albumOwnerId, int page, int pageSize);
         PhotoDto[] GetUserAlbum(int userId, int page, int pageSize);
         PhotoInfoDto GetPhotoInfo(int photoId);
         void UpdatePhotoInfo(int photoId, string photoName);

@@ -40,13 +40,13 @@ namespace PhotoGallery.Client.WebApp.Controllers
         public ActionResult UserPhotos(string login,int page=0)
         {
             try {
-                var userInfoDto = _service.GetUserPublicInfo(login);
-                var userInfo = Mapper.Map<UserInfoDto, UserPublicInfo>(userInfoDto);
-                UserAlbum userAlbum = new UserAlbum(userInfo, GetItemsPage(page, userInfo.Id));
+                var ownerAlbumDto = _service.GetUserPublicInfo(login);
+                var ownerAlbum = Mapper.Map<UserInfoDto, UserPublicInfo>(ownerAlbumDto);
+                UserAlbum userAlbum = new UserAlbum(ownerAlbum, GetItemsPage(page, ownerAlbum.Id));
 
                 if (Request.IsAjaxRequest())
                 {
-                    return PartialView("PhotoCollection", GetItemsPage(page, userInfo.Id));
+                    return PartialView("PhotoCollection", GetItemsPage(page, ownerAlbum.Id));
                 }
                 return View(userAlbum);
             }

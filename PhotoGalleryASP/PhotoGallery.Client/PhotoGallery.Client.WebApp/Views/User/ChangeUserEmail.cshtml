@@ -1,7 +1,6 @@
 ﻿@model PhotoGallery.Client.WebApp.Models.UserViewModel.EditUserEmail
 
-@using (Html.BeginForm("ChangeUserEmail", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+<form method="post" id="editUserEmail" action="@Url.Action("ChangeUserEmail")">
     <div class="form-horizontal">
         <h4 class="col-md-offset-1">Change Email</h4>
         <hr />
@@ -9,28 +8,27 @@
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Login)
 
-        <div class="form-group">                 
-            @Html.LabelFor(m => m.CurrentEmail, new { @class = "control-label col-md-2" })
+       
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(m => m.CurrentEmail)               
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
             </div>
         </div>
+             
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NewEmail, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NewEmail)
-                @Html.ValidationMessageFor(model => model.NewEmail)
-            </div>
-        </div>
-
-        <div class="form-group">
+   <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="saveEmail" value="Save" type="submit" class="btn btn-default" />
-                </div>
+                <input type="submit" value="Save" class="btn btn-default"/>
+            </div>
         </div>
+        
+
     </div>
-}
+
+    </form>
+
 
 
 

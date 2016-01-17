@@ -19,7 +19,8 @@ namespace PhotoGallery.Client.WebApp.Mapping
             Mapper.CreateMap<UserDto, EditUserInfo>();
             Mapper.CreateMap<UserDto, EditUserPassword>();
             Mapper.CreateMap<UserInfoDto, UserPublicInfo>();
-            Mapper.CreateMap<UserDto, EditUserEmail>().ForMember("CurrentEmail", opt => opt.MapFrom(src => src.Email));
+            Mapper.CreateMap<UserDto, EditUserEmail>();
+           
         }
     }
 }

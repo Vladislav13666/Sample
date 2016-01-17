@@ -1,7 +1,8 @@
 ﻿@model PhotoGallery.Client.WebApp.Models.UserViewModel.EditUserInfo
 
-@using (Html.BeginForm("ChangeUserInfo", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+
+<form method="post" id="editUserInfo" action="@Url.Action("ChangeUserInfo")">
+
     <div class="form-horizontal">
         <h4 class="col-md-offset-1">Change User Info</h4>
         <hr />
@@ -30,6 +31,7 @@
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
-        </div>
 
-        }
+    </div>
+
+</form>
