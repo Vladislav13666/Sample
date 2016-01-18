@@ -74,7 +74,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
                 };
 
                 _service.AddPhoto(photoDto);
-                return RedirectToAction("Manage");
+                return RedirectToAction("Manage", new { login=User.Identity.Name});
             }
             return PartialView("CreatePhoto",pm);             
         }
@@ -95,7 +95,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 _service.UpdatePhotoInfo(photoModel.PhotoId, photoModel.Title);
-                return RedirectToAction("Manage");
+                return Json("Edit");
             }
             return PartialView("EditPhoto",photoModel);
         }
@@ -117,7 +117,7 @@ namespace PhotoGallery.Client.WebApp.Controllers
                 _service.DeletePhoto(photo.PhotoId);
                 FileInfo fileInf = new FileInfo(Server.MapPath(photo.ImagePath));
                 fileInf.Delete();
-                return RedirectToAction("Manage");
+                return Json("Delete");
             }
             catch (FaultException<ServiceDataError> ex)
             {

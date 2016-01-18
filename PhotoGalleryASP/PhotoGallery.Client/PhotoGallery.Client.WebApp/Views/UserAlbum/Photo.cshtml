@@ -7,10 +7,10 @@
     <div class="photo-info">
         <div>
             <h2 class="image-title">@Model.Title</h2>
-            <button type="button" class="viewDialog" onclick="photoEdit(@Model.PhotoId)">
+            <button type="button" onclick="photoEdit(@Model.PhotoId)">
                 <span class="glyphicon glyphicon-edit"></span>EditPhoto
             </button>
-            <button type="button" class="viewDialog" onclick="photoDelete(@Model.PhotoId)">
+            <button type="button" onclick="photoDelete(@Model.PhotoId)">
                 <span class="glyphicon glyphicon-remove"></span>DeletePhoto
             </button>
         </div>

@@ -1,18 +1,17 @@
 ﻿@model PhotoGallery.Client.WebApp.Models.PhotoViewModel.PhotoDeleteModel
 
-<p>Delete?</p>
+<h2>Delete?</h2>
 
-@using (Html.BeginForm("DeletePhoto", "UserAlbum", FormMethod.Post))
-{
+<form id="photoDeleteForm">
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
 
-        @Html.HiddenFor(model => model.PhotoId)
+        @Html.HiddenFor(model => model.PhotoId, new { @id = "photoId" })
         @Html.HiddenFor(model => model.ImagePath)
 
     </div>
 
-}
+</form>
      
 
 

@@ -6,16 +6,84 @@
        
 </head>
 <body>
-   
+
+    <div>
+        <div id="uploadPhotoModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Upload Photo</h4>
+                    </div>
+                    <div id="uploadPhotoModalInternal" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="uploadPhoto()">Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <div id="editPhotoModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit Photo</h4>
+                    </div>
+                    <div id="editPhotoModalInternal" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="photoSaveChanges()">Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <div id="deletePhotoModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Delete Photo</h4>
+                    </div>
+                    <div id="deletePhotoModalInternal" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="photoDeleteConfirm()">Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
           
-        <button type="button" class="viewDialog col-md-offset-1" onclick="photoCreate()">
-            <span class="glyphicon glyphicon-save"></span>Upload Photo
-        </button>
- 
+          
+      
+    <button type="button" class="col-md-offset-1" onclick="photoCreate()">
+        <span class="glyphicon glyphicon-save"></span>Upload Photo
+    </button>
+     
 
         <div id="contentPlace">
            @Html.Partial("PhotoCollection");           
         </div>
+
+   
+  
+
+
 
         @section scripts {
     <script type="text/javascript">
@@ -56,28 +124,60 @@
             });
         })
 
-    
+
         function photoCreate() {
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("Create")',
                 data: {},
                 success: function (result) {
-                    $("#dialogContent").html(result);
+                    var elem = $('#uploadPhotoModalInternal');
+                    elem.empty();
+                    elem.html(result);
+                    $('#uploadPhotoModal').modal('show');
                 }
             });
         }
 
+        function uploadPhoto() {
+            var form = $('#uploadPhotoForm');
+            form.submit();
+            $('#uploadPhotoModal').modal('hide');
+        }
+
         function photoEdit(photoId) {
-          $.ajax({
+           $.ajax({
                 type: 'GET',
                 url: '@Url.Action("EditPhoto")',
                 data: { photoId: photoId },
                 success: function (result) {
-                    $("#dialogContent").html(result);
+                    var elem = $('#editPhotoModalInternal');
+                    elem.empty();
+                    elem.html(result);
+                    $('#editPhotoModal').modal('show');
                 }
             });
         }
+
+
+        function photoSaveChanges() {
+            var form = $('#photoEditForm');
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("EditPhoto")',
+                data:  form.serialize() ,
+                success: function (result) {
+                    var photoId = form.find('#photoId').val();
+                    var photo = $('[name=' + photoId + ']');
+                    var title = photo.find('.image-title');
+                    title.empty();
+                    title.html(form.find('#newTitle').val());
+                   }
+            });
+            $('#editPhotoModal').modal('hide');
+        }
+
+
 
         function photoDelete(photoId) {
              $.ajax({
@@ -85,42 +185,60 @@
                 url: '@Url.Action("DeletePhoto")',
                 data: { photoId: photoId },
                 success: function (result) {
-                  $("#dialogContent").html(result);
+                    var elem = $('#deletePhotoModalInternal');
+                    elem.empty();
+                    elem.html(result);
+                    $('#deletePhotoModal').modal('show');
                 }
              });
         }
 
-      
-        $(document).ready(function () {
+        function photoDeleteConfirm() {
+           var form = $('#photoDeleteForm');
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeletePhoto")',
+                data:  form.serialize() ,
+                success: function (result) {
+                    var photoId = form.find('#photoId').val();
+                    $('div[name=' + photoId + ']').remove();
+                   }
+            });
+            $('#deletePhotoModal').modal('hide');
+        }
 
-            $.ajaxSetup({ cache: false });
-                                         
 
-        $("body").on("click",".viewDialog", function (e) {
-            e.preventDefault();
-           
-            $("<div id='dialogContent'></div>")
-                .addClass("dialog")
-                .appendTo("body")
-                .load(this.href)
-                .dialog({
-                    title: $(this).attr("data-dialog-title"),
-                    close: function () { $(this).remove() },
-                    modal: true,
-                    buttons: {
-                        "Save": function () {
-                            var form = $('form');
-                            form.submit();
-                        }
-                    }
-                });
-        });
-        $(".close").on("click", function (e) {
-            e.preventDefault();
-            $(this).closest(".dialog").dialog("close");
-        });
 
-  });
+  //      $(document).ready(function () {
+
+  //          $.ajaxSetup({ cache: false });
+
+
+  //      $("body").on("click",".viewDialog", function (e) {
+  //          e.preventDefault();
+
+  //          $("<div id='dialogContent'></div>")
+  //              .addClass("dialog")
+  //              .appendTo("body")
+  //              .load(this.href)
+  //              .dialog({
+  //                  title: $(this).attr("data-dialog-title"),
+  //                  close: function () { $(this).remove() },
+  //                  modal: true,
+  //                  buttons: {
+  //                      "Save": function () {
+  //                          var form = $('form');
+  //                          form.submit();
+  //                      }
+  //                  }
+  //              });
+  //      });
+  //      $(".close").on("click", function (e) {
+  //          e.preventDefault();
+  //          $(this).closest(".dialog").dialog("close");
+  //      });
+
+  //});
     </script>
 
         }
