@@ -61,8 +61,10 @@
     <Compile Include="Entities\UserRating.cs" />
     <Compile Include="Exceptions\UserDataException.cs" />
     <Compile Include="Exceptions\MissingDataException.cs" />
-    <Compile Include="Impl\PhotoGallerySrv.cs" />
-    <Compile Include="IPhotoGallerySrv.cs" />
+    <Compile Include="Impl\UserSrv.cs" />
+    <Compile Include="Impl\PhotoSrv.cs" />
+    <Compile Include="IUserSrv.cs" />
+    <Compile Include="IPhotoSrv.cs" />
     <Compile Include="Mapping\PhotoMapping.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
     <Compile Include="Migrations\201601071644306_MigrateDB.cs" />

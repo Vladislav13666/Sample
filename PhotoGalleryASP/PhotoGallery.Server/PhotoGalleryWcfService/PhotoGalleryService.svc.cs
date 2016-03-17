@@ -17,11 +17,13 @@ namespace PhotoGalleryWcfService
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class PhotoGalleryService : IPhotoGalleryService
     {
-        private IPhotoGallerySrv photoGallerySrv;
+        private IUserSrv userSrv;
+        private IPhotoSrv photoSrv;
 
-        public PhotoGalleryService(IPhotoGallerySrv photoGallerySrv)
+        public PhotoGalleryService(IUserSrv userSrv,IPhotoSrv photoSrv)
         {
-            this.photoGallerySrv = photoGallerySrv;
+            this.userSrv = userSrv;
+            this.photoSrv = photoSrv;
         }
 
         #region UserService
@@ -29,7 +31,7 @@ namespace PhotoGalleryWcfService
         {
             try
             {
-                photoGallerySrv.CreateUser(user);
+                userSrv.CreateUser(user);
             }
             catch(UserDataException ex)
             {               
@@ -42,7 +44,7 @@ namespace PhotoGalleryWcfService
         {
             try
             {
-                return photoGallerySrv.AuthenticateUser(login, password);
+                return userSrv.AuthenticateUser(login, password);
             }
             catch (MissingDataException ex)
             {               
@@ -56,13 +58,13 @@ namespace PhotoGalleryWcfService
 
         public UserDto FindUserByUserLogin(string login)
         {
-            return photoGallerySrv.FindUserByUserLogin(login);
+            return userSrv.FindUserByUserLogin(login);
         }
 
         public UserInfoDto GetUserPublicInfo(string login)
         {
             try {
-                return photoGallerySrv.GetUserPublicInfo(login);
+                return userSrv.GetUserPublicInfo(login);
             }
             catch (MissingDataException ex)
             {
@@ -74,7 +76,7 @@ namespace PhotoGalleryWcfService
         {
             try
             {
-                return photoGallerySrv.UpdateUserEmail(userId, newEmail);
+                return userSrv.UpdateUserEmail(userId, newEmail);
             }
             catch (UserDataException ex){
                 throw new FaultException<ServiceValidationError>(new ServiceValidationError(ex.Message));
@@ -85,7 +87,7 @@ namespace PhotoGalleryWcfService
         {
             try
             {
-               return photoGallerySrv.UpdateUserPassword(userId, currentPassword, newPassword);
+               return userSrv.UpdateUserPassword(userId, currentPassword, newPassword);
             }
             catch (UserDataException ex)
             {
@@ -95,21 +97,21 @@ namespace PhotoGalleryWcfService
 
         public UserDto UpdateUserInfo(int userId,string firstName,string secondName)
         {           
-              return photoGallerySrv.UpdateUserInfo(userId,firstName,secondName);                             
+              return userSrv.UpdateUserInfo(userId,firstName,secondName);                             
         }
 
         #endregion
 
         #region PhotoService
         public void AddPhoto(PhotoDto photoDto) {
-            photoGallerySrv.AddPhoto(photoDto);
+            photoSrv.AddPhoto(photoDto);
         }               
 
         public PhotoInfoDto GetPhotoInfo(int photoId)
         {
             try
             {
-                return photoGallerySrv.GetPhotoInfo(photoId);
+                return photoSrv.GetPhotoInfo(photoId);
             }
             catch (MissingDataException ex)
             {
@@ -121,7 +123,7 @@ namespace PhotoGalleryWcfService
         {
             try
             {
-                photoGallerySrv.UpdatePhotoInfo(photoId, photoName);
+                photoSrv.UpdatePhotoInfo(photoId, photoName);
             }
             catch (MissingDataException ex)
             {
@@ -133,7 +135,7 @@ namespace PhotoGalleryWcfService
         {
             try
             {
-                photoGallerySrv.DeletePhoto(photoId);
+                photoSrv.DeletePhoto(photoId);
             }
             catch (MissingDataException ex)
             {
@@ -143,18 +145,18 @@ namespace PhotoGalleryWcfService
 
         public PhotoDto[] GetPhotos(int userId, int? albumOwnerId, int page, int pageSize)
         {
-            return photoGallerySrv.GetPhotos(userId, albumOwnerId, page, pageSize);
+            return photoSrv.GetPhotos(userId, albumOwnerId, page, pageSize);
         }
 
 
         public PhotoDto[] GetUserAlbum(int userId, int page, int pageSize)
         {
-            return photoGallerySrv.GetUserAlbum(userId, page, pageSize);
+            return photoSrv.GetUserAlbum(userId, page, pageSize);
         }
               
         public void SetPhotoRating(int photoId, int userId, int rating)
         {
-            photoGallerySrv.SetPhotoRating(photoId, userId,rating);
+            photoSrv.SetPhotoRating(photoId, userId,rating);
         }
 
         #endregion

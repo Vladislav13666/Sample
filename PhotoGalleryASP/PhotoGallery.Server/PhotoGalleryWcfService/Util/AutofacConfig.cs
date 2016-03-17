@@ -16,7 +16,8 @@ namespace PhotoGalleryWcfService.Util
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<PhotoGalleryService>().As<PhotoGalleryService>().InstancePerLifetimeScope();
-            builder.RegisterType<PhotoGallerySrv>().As<IPhotoGallerySrv>().InstancePerLifetimeScope();
+            builder.RegisterType<UserSrv>().As<IUserSrv>().InstancePerLifetimeScope();
+            builder.RegisterType<PhotoSrv>().As<IPhotoSrv>().InstancePerLifetimeScope();
             builder.RegisterType<PhotoGalleryDbContext>().As<PhotoGalleryDbContext>().InstancePerLifetimeScope();
             var container = builder.Build();
             AutofacHostFactory.Container = container;

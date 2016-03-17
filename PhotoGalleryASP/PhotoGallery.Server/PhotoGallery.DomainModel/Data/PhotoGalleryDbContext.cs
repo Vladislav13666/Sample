@@ -11,7 +11,7 @@ namespace PhotoGallery.DomainModel.Data
 {
    public class PhotoGalleryDbContext: DbContext
     {
-      public PhotoGalleryDbContext() :base(ConfigurationManager.ConnectionStrings["DefaultConnect"].ConnectionString) { }
+    public PhotoGalleryDbContext() :base(ConfigurationManager.ConnectionStrings["DefaultConnect"].ConnectionString) { }
             //:base(@"Data Source=.\SQLEXPRESS;Initial Catalog=PhotoGallery;Integrated Security=True;Integrated Security=True")          
                
         public DbSet<User> Users { get; set; }
